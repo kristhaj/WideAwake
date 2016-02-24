@@ -35,9 +35,8 @@ def connectToDB():
 
 
 #Creates testData to be uploaded
-add_testCoordinates = ("INSERT INTO coordinates "  #coordinates = tabelName
-                       "latitude, longitude "
-                       "VALUES (63.424156, 10.393827)")
+#coordinates = tabelName
+add_testCoordinates = ("INSERT INTO coordinates (latitude, longitude) VALUES (63.424156, 10.393827)")
 
 def pushToDB():
     cursor = cnx.cursor()
