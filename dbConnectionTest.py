@@ -2,17 +2,20 @@ import mysql.connector
 from mysql.connector import errorcode
 
 #Connection configurations
-config = {'user': 'username',
-          'password':'password',
-          'host':'ip-adr',
-          'database':'coordinates',
+config = {'user': 'saskaugv',
+          'password':'skaugvoll',
+          'host':'mysql.stud.ntnu.no',
+          'database':'<databaseNavn>',
           }
 
 #Initialize cnx as empty global variable
 cnx = None
 
 def getConnection():
+    global cnx
     cnx = mysql.connector.connect(**config)
+    global cursor
+    cursor = cnx.cursor()
 
 def closeConnetion():
     cnx.close()
@@ -41,7 +44,9 @@ add_testCoordinates = ("INSERT INTO coordinates "
 
 def pushToDB():
     cursor = cnx.cursor()
+    #Insert new tuple to database
     cursor.execute(add_testCoordinates)
+    #make sure data is commited to database
     cnx.commit()
     cursor.close()
 
