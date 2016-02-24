@@ -8,9 +8,6 @@ config = {'user': 'saskaugv',
           'database':'<databaseNavn>',
           }
 
-#Initialize cnx as empty global variable
-cnx = None
-
 def getConnection():
     global cnx
     cnx = mysql.connector.connect(**config)
@@ -38,7 +35,7 @@ def connectToDB():
 
 
 #Creates testData to be uploaded
-add_testCoordinates = ("INSERT INTO coordinates "
+add_testCoordinates = ("INSERT INTO coordinates "  #coordinates = tabelName
                        "latitude, longitude "
                        "VALUES (63.424156, 10.393827)")
 
