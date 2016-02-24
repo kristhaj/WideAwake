@@ -14,6 +14,10 @@ README.md
 .idea/dictionaries
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/WideAwake.iml
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
