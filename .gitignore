@@ -1,2 +1,10 @@
+#automatic from github
 README.md
-.idea
+
+#IDE files
+.idea/WideAwake.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
