@@ -50,7 +50,7 @@ def pushToDB():
 
 #SQL-statment to execute on database (retrive tuples)
 #coordinates = tabelName
-query = ("SELECT * FROM coordinates")
+query = ("SELECT latitude, longitude FROM coordinates")
 
 #query a select-statment from the database
 def pullFromDB():
@@ -59,8 +59,11 @@ def pullFromDB():
 
 #format the output from the query
 def toString():
-    for coords in cursor:
-        print (coords)
+    for (latitude, longitude) in cursor:
+        print () #print a space between each tuple
+        print("Long: " + str(longitude))
+        print("Lat: " + str(latitude))
+
 
 
 #Run testScript, Try to connect, push and pull data. then prensent data or errors to user.
