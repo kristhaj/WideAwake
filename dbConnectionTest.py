@@ -5,7 +5,7 @@ from mysql.connector import errorcode
 config = {'user': 'saskaugv',
           'password':'skaugvoll',
           'host':'mysql.stud.ntnu.no',
-          'database':'<databaseNavn>',
+          'database':'tshumbor_WideAwake',
           }
 #Establish connection to the database with config-user information
 def getConnection():
@@ -37,7 +37,7 @@ def connectToDB():
 
 #Creates testData to be uploaded
 #coordinates = tabelName
-add_testCoordinates = ("INSERT INTO coordinates (latitude, longitude) VALUES (63.424156, 10.393827)")
+add_testCoordinates = ("INSERT INTO Coordinates (latitude, longitude) VALUES (63.424156, 10.393827)")
 
 #try and push data to the schema tabel
 def pushToDB():
@@ -50,7 +50,7 @@ def pushToDB():
 
 #SQL-statment to execute on database (retrive tuples)
 #coordinates = tabelName
-query = ("SELECT latitude, longitude FROM coordinates")
+query = ("SELECT latitude, longitude FROM Coordinates")
 
 #query a select-statment from the database
 def pullFromDB():
@@ -75,3 +75,5 @@ def main():
     pullFromDB()
     print("Did it work?, if so the connection will now be closed")
     closeConnetion()
+
+main()
