@@ -46,9 +46,27 @@ def pushToDB():
     cnx.commit()
     cursor.close()
 
+#SQL-statment to execute on database (retrive tuples)
+#coordinates = tabelName
+query = ("SELECT * FROM coordinates")
+
+
+def pullFromDB():
+    cursor.execute(query)
+    toString()
+
+
+def toString():
+    for coords in cursor:
+        print (coords)
+
+
+
 def main():
     connectToDB()
     print("Will now try and push to database")
     pushToDB()
-    print("Did it work?, if so now I will close the connection")
+    print("It worked! lets try and retrive from the database")
+    pullFromDB()
+    print("Did it work?, if so the connection will now be closed")
     closeConnetion()
