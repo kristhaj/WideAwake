@@ -7,17 +7,18 @@ config = {'user': 'saskaugv',
           'host':'mysql.stud.ntnu.no',
           'database':'<databaseNavn>',
           }
-
+#Establish connection to the database with config-user information
 def getConnection():
     global cnx
     cnx = mysql.connector.connect(**config)
     global cursor
     cursor = cnx.cursor()
 
+#close the connection to the databae
 def closeConnetion():
     cnx.close()
 
-
+#Try and connect to database, otherwise print error message.
 def connectToDB():
     try:
         #Try to connect to database with config
@@ -38,6 +39,7 @@ def connectToDB():
 #coordinates = tabelName
 add_testCoordinates = ("INSERT INTO coordinates (latitude, longitude) VALUES (63.424156, 10.393827)")
 
+#try and push data to the schema tabel
 def pushToDB():
     cursor = cnx.cursor()
     #Insert new tuple to database
@@ -50,18 +52,18 @@ def pushToDB():
 #coordinates = tabelName
 query = ("SELECT * FROM coordinates")
 
-
+#query a select-statment from the database
 def pullFromDB():
     cursor.execute(query)
     toString()
 
-
+#format the output from the query
 def toString():
     for coords in cursor:
         print (coords)
 
 
-
+#Run testScript, Try to connect, push and pull data. then prensent data or errors to user.
 def main():
     connectToDB()
     print("Will now try and push to database")
