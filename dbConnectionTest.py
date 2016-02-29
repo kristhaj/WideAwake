@@ -37,7 +37,7 @@ def connectToDB():
 
 #Creates testData to be uploaded
 #coordinates = tabelName
-add_testCoordinates = ("INSERT INTO Coordinates (Latitude, Longitude) VALUES (63.424156, 10.393827)")
+add_testCoordinates = ("INSERT INTO Coordinates (Latitude, Longitude) VALUES (69.302572, 17.997549)")
 
 #try and push data to the schema tabel
 def pushToDB():
@@ -61,9 +61,8 @@ def pullFromDB():
 def toString():
     for (latitude, longitude) in cursor:
         print () #print a space between each tuple
-        print("Long: " + str(longitude))
-        print("Lat: " + str(latitude))
-
+        print("Latitude: " + str(latitude))
+        print("Longitude: " + str(longitude))
 
 
 #Run testScript, Try to connect, push and pull data. then prensent data or errors to user.
@@ -73,7 +72,7 @@ def main():
     pushToDB()
     print("It worked! lets try and retrive from the database")
     pullFromDB()
-    print("Did it work?, if so the connection will now be closed")
+    print("\nConnection will now terminate")
     closeConnetion()
 
 main()
