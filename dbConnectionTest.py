@@ -1,11 +1,18 @@
 import mysql.connector
 from mysql.connector import errorcode
 
+import dbConfig
+
+usr = dbConfig.getUsr()
+pwd = dbConfig.getPwd()
+host = dbConfig.getHost()
+db = dbConfig.getDB()
+
 #Connection configurations
-config = {'user': 'saskaugv',
-          'password':'skaugvoll',
-          'host':'mysql.stud.ntnu.no',
-          'database':'tshumbor_WideAwake',
+config = {'user': usr,
+          'password': pwd,
+          'host': host,
+          'database': db,
           }
 #Establish connection to the database with config-user information
 def getConnection():
@@ -33,7 +40,6 @@ def connectToDB():
             print("Database does not exist")
         else:
             print(err)
-
 
 
 #try and push data to the schema tabel
