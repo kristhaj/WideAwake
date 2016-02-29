@@ -35,12 +35,11 @@ def connectToDB():
             print(err)
 
 
-#Creates testData to be uploaded
-#coordinates = tabelName
-add_testCoordinates = ("INSERT INTO Coordinates (Latitude, Longitude) VALUES (69.302572, 17.997549)")
 
 #try and push data to the schema tabel
-def pushToDB():
+def pushToDB(lat, long):
+    #create test query, coordinates = tabelName
+    add_testCoordinates = ("INSERT INTO Coordinates (Latitude, Longitude) VALUES ("+lat+", "+long+")")
     cursor = cnx.cursor()
     #Insert new tuple to database
     try:
@@ -74,8 +73,12 @@ def toString():
 #Run testScript, Try to connect, push and pull data. then prensent data or errors to user.
 def main():
     connectToDB()
+
     print("Will now try and push to database")
-    pushToDB()
+    #Creates testData to be uploaded
+    lat,long = str(69.302272),str(16.997549)
+    pushToDB(lat, long)
+
     pullFromDB()
     print("\nConnection will now terminate")
     closeConnetion()
