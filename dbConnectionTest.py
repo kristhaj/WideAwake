@@ -37,7 +37,7 @@ def connectToDB():
 
 #Creates testData to be uploaded
 #coordinates = tabelName
-add_testCoordinates = ("INSERT INTO Coordinates (latitude, longitude) VALUES (63.424156, 10.393827)")
+add_testCoordinates = ("INSERT INTO Coordinates (Latitude, Longitude) VALUES (63.424156, 10.393827)")
 
 #try and push data to the schema tabel
 def pushToDB():
@@ -50,7 +50,7 @@ def pushToDB():
 
 #SQL-statment to execute on database (retrive tuples)
 #coordinates = tabelName
-query = ("SELECT latitude, longitude FROM Coordinates")
+query = ("SELECT Latitude, Longitude FROM Coordinates")
 
 #query a select-statment from the database
 def pullFromDB():
