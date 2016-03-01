@@ -1,4 +1,5 @@
 #requires the GPIO library to be setup on the Pi
+#GPIO setup guide @ http://www.thirdeyevis.com/pi-page-1.php#gpio-setup
 
 import time
 import RPi.GPIO as GPIO #library for controlling the Pis I/O pins
