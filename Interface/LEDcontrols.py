@@ -21,7 +21,7 @@ def main(startingUp, delay, slipperyStatus): #startingUp is a boolean that chang
         time.sleep(delay)#pause
         GPIO.output(greenLED, False)#turns LED off
         time.sleep(delay)#pause
-    if piStatus: #checks status of road
+    if not slipperyStatus: #checks status of road
         greenLEDon()
     else:
         redLEDon()
