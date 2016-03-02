@@ -53,9 +53,11 @@ def pushToDB(lat, long):
     try:
         cursor.execute(add_testCoordinates)
         print("Successfylly pushed to database")
+        return True
 #This exception is raised when the relational integrity of the data is affected. For example, a duplicate key was inserted or a foreign key constraint would fail.
     except mysql.connector.IntegrityError as err:
         print("Error: {}".format(err))
+        return False
 
     #make sure data is commited to database
     cnx.commit()
@@ -67,8 +69,12 @@ query = ("SELECT Latitude, Longitude FROM Coordinates")
 
 #query a select-statment from the database
 def pullFromDB():
-    cursor.execute(query)
-    toString()
+    try:
+        cursor.execute(query)
+        toString()
+        return True
+    except Exception:
+        return False
 
 #format the output from the query
 def toString():
@@ -84,6 +90,8 @@ def main():
         print("Will now try and push to database")
         #Creates testData to be uploaded
         lat,long = str(69.302272),str(16.997549)
+
+        print("Will now try and pull from databae")
         pushToDB(lat, long)
 
         pullFromDB()
