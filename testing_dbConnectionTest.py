@@ -15,7 +15,7 @@ class MyTestCase(unittest.TestCase):
         self.assertFalse(dbConnectionTest.pushToDB(str(63.424156),str(10.393827))) #testing for duplicate coordinates to elgseterbrua. Should return false, because they are in the
 
     def test_PullFromDB(self):
-        self.assertTrue(dbConnectionTest.pullFromDB()) #true if managed to retrive from database
+        self.assertTrue(dbConnectionTest.pullFromDB())
 
 
 if __name__ == '__main__':
