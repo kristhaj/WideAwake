@@ -72,6 +72,7 @@ def pullFromDB():
     try:
         cursor.execute(query)
         toString()
+        print("Successfully pulled from database")
         return True
     except Exception:
         return False
