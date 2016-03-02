@@ -32,6 +32,7 @@ def connectToDB():
         getConnection()
         #if connection successful
         print("Connection established to database")
+        return True
     #if connection attempt failed, do:
     except mysql.connector.Error as err:
         if(err.errno == errorcode.ER_ACCESS_DENIED_ERROR):
@@ -40,6 +41,7 @@ def connectToDB():
             print("Database does not exist")
         else:
             print(err)
+        return False
 
 
 #try and push data to the schema tabel
@@ -78,15 +80,16 @@ def toString():
 
 #Run testScript, Try to connect, push and pull data. then prensent data or errors to user.
 def main():
-    connectToDB()
+    if(connectToDB()):
+        print("Will now try and push to database")
+        #Creates testData to be uploaded
+        lat,long = str(69.302272),str(16.997549)
+        pushToDB(lat, long)
 
-    print("Will now try and push to database")
-    #Creates testData to be uploaded
-    lat,long = str(69.302272),str(16.997549)
-    pushToDB(lat, long)
-
-    pullFromDB()
-    print("\nConnection will now terminate")
-    closeConnetion()
+        pullFromDB()
+        print("\nConnection will now terminate")
+        closeConnetion()
+    else:
+        print("Could not connect to database")
 
 main()
