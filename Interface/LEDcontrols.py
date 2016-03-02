@@ -4,11 +4,12 @@
 import time
 import RPi.GPIO as GPIO #library for controlling the Pis I/O pins
 
-greenLED = 1 #pin number of green LED
-redLED = 2 #pin number of red LED
+greenLED = 17 #pin number of green LED
+redLED = 27 #pin number of red LED
 
-GPIO.setmode(GPIO.BOARD)#enables board pin numbering
-GPIO.setmode(greenLED, GPIO.OUT)#sets which pin is to be used as output
+GPIO.setmode(GPIO.BCM)#enables board pin numbering
+GPIO.setup(greenLED, GPIO.OUT)#sets which pin is to be used as output
+GPIO.setup(redLED, GPIO.OUT)
 
 def greenLEDon():
     GPIO.output(greenLED, True)#Turns on green LED, signaling OK road
