@@ -1,3 +1,6 @@
+"""
+WideAwake documentation for sprint 1.
+"""
 import mysql.connector
 from mysql.connector import errorcode
 
@@ -9,27 +12,41 @@ host = dbConfig.getHost()
 db = dbConfig.getDB()
 
 #Connection configurations
-"""config contains the database credentials
-"""
 config = {'user': usr,
           'password': pwd,
           'host': host,
           'database': db,
           }
-#Establish connection to the database with config-user information
+
 def getConnection():
+    """
+    This creates the database connection, cnx, and the database cursor, cursor, initialising  both globaly
+    The database credentials are stored in a separate file not stored on github so the database is secure.
+
+    :cnx: mysql.connector
+    :cursor: mysql.connector.cursor
+    :return: nothing directly, but sets the two global variables cnx and cursor
+    """
     global cnx
     cnx = mysql.connector.connect(**config)
     global cursor
     cursor = cnx.cursor()
 
 
-#close the connection to the databae
-def closeConnetion():
+def closeConnection():
+    """
+    Closes the database connection
+    """
     cnx.close()
 
-#Try and connect to database, otherwise print error message.
 def connectToDB():
+    """
+    Connects the scripts to the database using getConnection().
+    Returns true if successful, or false if unsuccessful.
+    Also prints the errors if there are any.
+
+    :return: boolean
+    """
     try:
         #Try to connect to database with config
         getConnection()
@@ -47,8 +64,16 @@ def connectToDB():
         return False
 
 
-#try and push data to the schema tabel
 def pushToDB(lat, long):
+    """
+    Pushes gps data to the database.
+    Returns true if it is successful, or false if it is unsuccessful.
+    Also prints the errors if there are any.
+
+    :param lat: number
+    :param long: number
+    :return: boolean
+    """
     #create test query, coordinates = tabelName
     add_testCoordinates = ("INSERT INTO Coordinates (Latitude, Longitude) VALUES ("+lat+", "+long+")")
     cursor = cnx.cursor()
@@ -71,8 +96,13 @@ def pushToDB(lat, long):
 #coordinates = tabelName
 query = ("SELECT Latitude, Longitude FROM Coordinates")
 
-#query a select-statment from the database
 def pullFromDB():
+    """
+    Pulls gps coordinates from the database.
+    Returns true if it is successful, or false if it is unsuccessful.
+
+    :return: boolean
+    """
     try:
         cursor.execute(query)
         toString()
@@ -81,16 +111,25 @@ def pullFromDB():
     except Exception:
         return False
 
-#format the output from the query
 def toString():
+    """
+    Formats and prints the tuples the cursor is pointing at.
+
+    :return: None
+    """
     for (latitude, longitude) in cursor:
         print () #print a space between each tuple
         print("Latitude: " + str(latitude))
         print("Longitude: " + str(longitude))
 
 
-#Run testScript, Try to connect, push and pull data. then prensent data or errors to user.
 def main():
+    """
+    Runs the testscript wich tries to connect, push and pull data. Then presents the data or errors to the user.
+    Uses connectToDB, pushToDB, pullFromDB, closeConnection, printing what step the script is on before executing it.
+
+    :return: None
+    """
     if(connectToDB()):
         print("Will now try and push to database")
 
@@ -102,7 +141,7 @@ def main():
         print("Will now try and pull from database")
         pullFromDB()
         print("\nConnection will now terminate")
-        closeConnetion()
+        closeConnection()
     else:
         print("could not connect to the database")
 
