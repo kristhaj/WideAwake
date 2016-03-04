@@ -10,6 +10,7 @@ README.md
 
 # User-specific stuff:
 .idea/*
+doc/*
 .idea/tasks.xml
 .idea/dictionaries
 .idea/vcs.xml
