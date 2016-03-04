@@ -53,14 +53,17 @@ def pushToDB(lat, long):
     #Insert new tuple to database
     try:
         cursor.execute(add_testCoordinates)
+        cnx.commit()
+        cursor.close()
         print("Successfylly pushed to database")
+        return True
 #This exception is raised when the relational integrity of the data is affected. For example, a duplicate key was inserted or a foreign key constraint would fail.
     except mysql.connector.IntegrityError as err:
         print("Error: {}".format(err))
+        return False
 
     #make sure data is commited to database
-    cnx.commit()
-    cursor.close()
+
 
 #SQL-statment to execute on database (retrive tuples)
 #coordinates = tabelName
@@ -68,8 +71,13 @@ query = ("SELECT Latitude, Longitude FROM Coordinates")
 
 #query a select-statment from the database
 def pullFromDB():
-    cursor.execute(query)
-    toString()
+    try:
+        cursor.execute(query)
+        toString()
+        print("Successfully pulled from database")
+        return True
+    except Exception:
+        return False
 
 #format the output from the query
 def toString():
@@ -85,9 +93,11 @@ def main():
         print("Will now try and push to database")
 
         #Creates testData to be uploaded
-        lat,long = str(69.302272),str(16.997549)
+        lat,long = str(29.113456),str(16.997549)
+
         pushToDB(lat, long)
 
+        print("Will now try and pull from database")
         pullFromDB()
         print("\nConnection will now terminate")
         closeConnetion()
