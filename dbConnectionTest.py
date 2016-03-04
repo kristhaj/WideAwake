@@ -9,6 +9,8 @@ host = dbConfig.getHost()
 db = dbConfig.getDB()
 
 #Connection configurations
+"""config contains the database credentials
+"""
 config = {'user': usr,
           'password': pwd,
           'host': host,
