@@ -11,6 +11,7 @@ README.md
 # User-specific stuff:
 .idea/*
 doc/*
+dbConnectionTest.html
 .idea/tasks.xml
 .idea/dictionaries
 .idea/vcs.xml
