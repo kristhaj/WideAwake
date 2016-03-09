@@ -1,5 +1,5 @@
+import Interface.LEDcontrols
 import dbConnectionTest
-#import Interface.LEDcontrols
 
 def main():
     dbConnection = dbConnectionTest
