@@ -1,7 +1,12 @@
 import json
 from pprint import pprint
 
-wantedAttributes = {
+class JsonParser:
+
+	wantedAttributes = dict()
+
+	def JsonParser(self):
+		self.wantedAttributes = {
 		'accelerator_pedal_position': False,
 		'engine_speed': False,
 		'vehicle_speed': True,
@@ -21,34 +26,33 @@ wantedAttributes = {
 		'ignition_status': False
 	}
 
-def getWantedAttributes():
-	return wantedAttributes
+	def getWantedAttributes(self):
+		return self.wantedAttributes
 
-def setWantedAttributes(attributeDict):
-	wantedAttributes = attributeDict
+	def setWantedAttributes(self, attributeDict):
+		wantedAttributes = attributeDict
 
-def addWantedAttribute(attribute,bool):
-	wantedAttributes[attribute] = bool
+	def addWantedAttribute(self, attribute,bool):
+		self.wantedAttributes[attribute] = bool
 
-def removeWantedAttribute(attribute):
-	del wantedAttributes[attribute]
-
-
-def isAttributeWanted(attributeLine):
-	attName = attributeLine.split("\"")[3]
-	if attName in wantedAttributes:
-		return wantedAttributes[attName]
-	else:
-		print(attName)
+	def removeWantedAttribute(self, attribute):
+		del self.wantedAttributes[attribute]
 
 
-def getResources(pathname):
-	jfile = list()
-	with open(pathname) as f:
-		for line in f:
-			if isAttributeWanted(line):
-				continue
-			jfile += json.loads(line)
+	def isAttributeWanted(self, attributeLine):
+		attName = attributeLine.split("\"")[3]
+		if attName in self.wantedAttributes:
+			return self.wantedAttributes[attName]
+		else:
+			print(attName)
 
 
-getResources("Resources/downtown-crosstown.json")
+	def getResources(self,pathname):
+		jfile = list()
+		with open(pathname) as f:
+			for line in f:
+				if self.isAttributeWanted(line):
+					continue
+				temp = json.loads(line)
+				jfile.append(temp)
+		return jfile
