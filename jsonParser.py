@@ -45,7 +45,6 @@ def isAttributeWanted(attributeLine):
 def getResources(pathname):
 	jfile = list()
 	with open(pathname) as f:
-		i = -1
 		for line in f:
 			if isAttributeWanted(line):
 				continue
