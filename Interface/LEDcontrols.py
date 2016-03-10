@@ -14,6 +14,7 @@ GPIO.setup(redLED, GPIO.OUT)
 GPIO.setup(yellowLED, GPIO.OUT)
 
 
+
 def safeMode(): #Enter safe mode (constant green LED)
     yellowOff()
     redOff()
