@@ -17,14 +17,15 @@ def setConnection(dbConnection):
 
 def compareCoordinates(carLat,carLong):
     try:
-     resultSet = connection.getResultset()
-     validateCoordinates(carLat,carLong,resultSet)
+        #find out what 'square'- to put in the where clause in SQL query.
+        query = ("SELECT Latitude, Longitude FROM Coordinates WHERE ")
+        resultSet = connection.getResultset(query)
+        validateCoordinates(carLat,carLong,resultSet)
     except Exception as e:
         return None
 
 def validateCoordinates(carLat, carLong, resultSet):
     carPos = (carLat, carLong)
-    #find out what 'square'- to put in the where clause in SQL query.
 
     #check if car coordinates is close to the resultSet (slippery Coordinates)
     for (lat, long) in resultSet:
