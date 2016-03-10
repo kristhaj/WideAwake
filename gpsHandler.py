@@ -20,7 +20,7 @@ def compareCoordinates(carLat,carLong):
         #find out what 'square'- to put in the where clause in SQL query.
         minLat, maxLat = getBetween(carLat)
         minLong, maxLong = getBetween(carLong)
-        query = ("SELECT Latitude, Longitude FROM Coordinates WHERE ")
+        query = ("SELECT Latitude, Longitude FROM Coordinates WHERE (carLat BETWEEN minLat AND maxLat) AND (carLong BETWEEN minLong AND maxLong)")
         resultSet = connection.getResultset(query)
         validateCoordinates(carLat,carLong,resultSet)
     except Exception as e:
@@ -28,7 +28,6 @@ def compareCoordinates(carLat,carLong):
 
 def validateCoordinates(carLat, carLong, resultSet):
     carPos = (carLat, carLong)
-
     #check if car coordinates is close to the resultSet (slippery Coordinates)
     for (lat, long) in resultSet:
         distKM = vincenty(carPos, (lat,long)).km
