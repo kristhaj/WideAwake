@@ -112,7 +112,7 @@ def pullFromDB():
     except Exception:
         return False
 
-def getResultSet():
+def getResultSet(query):
     try:
         cursor.execute(query)
         toString()
