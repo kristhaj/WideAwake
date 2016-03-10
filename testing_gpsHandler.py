@@ -1,13 +1,13 @@
 import unittest
 import dbConnectionTest
-import gpsHandler
+from gpsHandler import GPSHandler
 
 class MyTestCase(unittest.TestCase):
 
     def test_parameter(self):
         con = dbConnectionTest
         con.connectToDB()
-        handler = gpsHandler
+        handler = GPSHandler()
         state = handler.setConnection(con)
         self.assertTrue(state)
 
