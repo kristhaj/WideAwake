@@ -56,5 +56,5 @@ def main():
     handler = GPSHandler()
     handler.setConnection(con)
 
-main()
+#main()
 
