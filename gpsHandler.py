@@ -17,15 +17,17 @@ def setConnection(dbConnection):
 
 def compareCoordinates(carLat,carLong):
     try:
-     resultSet = connection.getResultset()
-     validateCoordinates(carLat,carLong,resultSet)
+        #find out what 'square'- to put in the where clause in SQL query.
+        minLat, maxLat = getBetween(carLat)
+        minLong, maxLong = getBetween(carLong)
+        query = ("SELECT Latitude, Longitude FROM Coordinates WHERE (carLat BETWEEN minLat AND maxLat) AND (carLong BETWEEN minLong AND maxLong)")
+        resultSet = connection.getResultset(query)
+        validateCoordinates(carLat,carLong,resultSet)
     except Exception as e:
         return None
 
 def validateCoordinates(carLat, carLong, resultSet):
     carPos = (carLat, carLong)
-    #find out what 'square'- to put in the where clause in SQL query.
-
     #check if car coordinates is close to the resultSet (slippery Coordinates)
     for (lat, long) in resultSet:
         distKM = vincenty(carPos, (lat,long)).km
@@ -39,6 +41,15 @@ def validateCoordinates(carLat, carLong, resultSet):
 
     #If not stopped by now, by one of the returns. That means that nearby coordinates are not slippery
     return 'N',None #N for none
+
+
+def getBetween(coordinate):
+    precision = len(str(coordinate).split(".")[1])
+    number = "0."+'0'*(precision-2)+"2"
+    maxNumber = round((coordinate + float(number)),precision)
+    minNumber = round((coordinate - float(number),precision))
+    return minNumber,maxNumber
+
 
 def main():
     con = dbConnectionTest
