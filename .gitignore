@@ -18,6 +18,7 @@ README.md
 .idea/misc.xml
 .idea/modules.xml
 .idea/WideAwake.iml
+.idea/inspectionProfiles
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
