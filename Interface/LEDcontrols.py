@@ -5,14 +5,22 @@ import time
 import RPi.GPIO as GPIO #library for controlling the Pis I/O pins
 
 greenLED = 17 #pin number of green LED
-redLED = 27 #pin number of red LED
-yellowLED = 29 #Pin number of yellow LED
+redLED = 22 #pin number of red LED
+yellowLED = 27 #Pin number of yellow LED
 
-GPIO.setmode(GPIO.BCM)#enables board pin numbering
-GPIO.setup(greenLED, GPIO.OUT)#sets which pin is to be used as output
-GPIO.setup(redLED, GPIO.OUT)
-GPIO.setup(yellowLED, GPIO.OUT)
 
+def setUpLeds(*leds):
+    GPIO.setmode(GPIO.BCM)#enables board pin numbering
+    for led in leds:
+        GPIO.setup(led, GPIO.OUT)
+        
+def blinkLeds(*leds):
+
+    for led in leds:
+        GPIO.output(led, True)
+        time.sleep(1)
+        GPIO.output(led, False)
+        
 
 
 def safeMode(): #Enter safe mode (constant green LED)
@@ -57,27 +65,29 @@ def yellowOn(): #Turns on yellow LED, signalling that the driver is approaching 
 def yellowOff(): #Turns off yellow LED
     GPIO.output(yellowLED, False)
 
-def main(startingUp): #startingUp is a boolean that changes when the Pi is ready
-
-    while startingUp: #amount of blinks
-        yellowOn()
-        time.sleep(0.4)#pause
-        greenOn()
-        time.sleep(0.4)
-        yellowOff()
-        greenOff()
-        time(0.4)
-    greenOn()
+def main():
+    try:
+        setUpLeds(greenLED, redLED, yellowLED)
+        blinkLeds(greenLED, redLED, yellowLED)
+        print ("Starting up..")
+        for i in range(0, 5): #amount of blinks
+            yellowOn()
+            time.sleep(0.4)#pause
+            greenOn()
+            time.sleep(0.4)
+            yellowOff()
+            greenOff()
+            time.sleep(0.4)
+        safeMode()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        shutdown()
 
 def shutdown(): #Turns off power to our pins and cleans up the ports (sets them to INPUT to protect the circuit)
-    yellowOff()
-    greenOff()
-    redOff()
+    print ("Shutting down..")
     GPIO.cleanup()
 
 
+
 main()
-time.sleep(2)
-shutdown()
-
-
