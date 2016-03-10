@@ -6,6 +6,7 @@ from mysql.connector import errorcode
 
 import dbConfig
 
+
 usr = dbConfig.getUsr()
 pwd = dbConfig.getPwd()
 host = dbConfig.getHost()
@@ -111,6 +112,16 @@ def pullFromDB():
     except Exception:
         return False
 
+def getResultSet():
+    try:
+        cursor.execute(query)
+        toString()
+        print("Successfully pulled from database")
+        return cursor
+    except Exception:
+        return False
+
+
 def toString():
     """
     Formats and prints the tuples the cursor is pointing at.
@@ -145,4 +156,3 @@ def main():
     else:
         print("could not connect to the database")
 
-main()
