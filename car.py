@@ -29,5 +29,16 @@ class Car:
 		return self.json
 
 	def next(self):
-		self.trip[self.tripCounter]
+		tempName = self.trip[self.tripCounter]['name']
+		tempVal = self.trip[self.tripCounter]['value']
+		if "vehicle_speed" == tempName:
+			self.speed = (self.speed[1],tempVal)
+		elif "longitdue" == tempName:
+			self.long = (self.long[1],tempVal)
+		elif "latitude" == tempName:
+			self.lat = (self.lat[1],tempVal)
+		elif tempVal == "end_of_script":
+			return False
+
 		self.tripCounter += 1
+		return True
