@@ -1,11 +1,11 @@
 import unittest
-import dbConnectionTest
+import dbConnection
 from gpsHandler import GPSHandler
 
 class MyTestCase(unittest.TestCase):
 
     def test_parameter(self):
-        con = dbConnectionTest
+        con = dbConnection
         con.connectToDB()
         handler = GPSHandler()
         state = handler.setConnection(con)
