@@ -17,48 +17,51 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(state)
 
     def test_carPos_against_dbCoordinates(self):
+        testState = False
         con = DBConnection()
         con.connectToDB()
         handler = GPSHandler()
-
+        handler.setConnection(con)
         parser = JsonParser()
+        parser.removeWantedAttribute("vehicle_speed")
+        parser.addWantedAttribute("vehicle_speed",False)
         #list containing dictionaries
         list = parser.getResources("Resources/downtown-crosstown.json")
         #Go through the dataset - dictionary/line for line.
         for i in range(len(list)):
-            carLat = None
-            carLong = None
+
             time1 = list[i]["timestamp"]
             #if end of script is next, it means that we have read the last (lat,long) tuples in dataset.
             if("end_of_script" in list[i+1]):
+                print("end_of_script")
                 break
-
             else:
-                name = list[i]["name"]
                 #latitude always comes before longitude, in dataset.
                 if(list[i]["name"]) == "latitude":
-                    carLat = list[i]["value"]
+                    #print(list[i]["value"])
+                    self.carLat = list[i]["value"]
+                    #print("lat" + str(self.carLat))
                 if(list[i+1]["name"]) == "longitude":
-                    carLong = list[i+1]["value"]
+                    self.carLong = list[i+1]["value"]
+                    #print("long" + str(self.carLong))
 
-
-                state = handler.compareCoordinates(carLat,carLong)
-                if(state == 'A'):
-                    self.assertEquals(handler.compareCoordinates(carLat,carLong),'A',(40.768967,-73.993202),None)
-                elif(state == 'C'):
-                    self.assertEquals(handler.compareCoordinates(carLat,carLong),'C',(40.768967,-73.993202),None)
-
+                #print("lat :" + str(self.carLat) + "    long : " + str(self.carLong))
+                state = handler.compareCoordinates(self.carLat,self.carLong)
+                print(state)
+                if(state[0] == "A"):
+                    print("que A")
+                    testState = True
+                elif(state[0] == "C"):
+                    print("que C")
+                    testState = True
 
                 #time to sleep between next command --> virtual real time.
                 time2 = list[i+1]["timestamp"]
-                print(time2-time1)
                 d = ((time2-time1)/1000000)
-                print(d)
-                if(d >= 0):
-                    time.sleep((time2-time1)/1000000)
-
+                #if(d >= 0):
+                    #time.sleep(d)
+        if(testState == False):
             self.fail()
-
 
 if __name__ == '__main__':
     unittest.main()
