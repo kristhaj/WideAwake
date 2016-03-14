@@ -149,8 +149,7 @@ def main():
         print("Will now try and push to database")
 
         #Creates testData to be uploaded
-        lat,long = str(11.113456),str(77.997549)
-
+        lat,long = str(40.768967),str(-73.993202)
         connection.pushToDB(lat, long)
 
         print("Will now try and pull from database")
