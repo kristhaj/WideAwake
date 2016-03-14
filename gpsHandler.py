@@ -39,11 +39,11 @@ class GPSHandler:
             minLong, maxLong = self.getBetween(carLong)
             query = ("SELECT Latitude, Longitude FROM Coordinates WHERE (carLat BETWEEN minLat AND maxLat) AND (carLong BETWEEN minLong AND maxLong)")
             resultSet = self.connection.getResultset(query)
-            return self.validateCoordinates(carLat,carLong,resultSet)
+            return self.validateCoordinates(carLat,carLong,resultSet,None)
         except Exception as e:
             return None
 
-    def validateCoordinates(self, carLat, carLong, resultSet):
+    def validateCoordinates(self, carLat, carLong, resultSet, carSpeed):
         '''
         This validates the car distance difference in km and/or meters against the coordinates in the resultset.
 
@@ -53,7 +53,7 @@ class GPSHandler:
         :param carLat: The car latitude coordinate
         :param carLong: The car longitude coordinate
         :param resultSet: The resultset containing the coordinates to compare the cars given coordiantes against.
-        :return 'C' =< 100m < 'A' < 1km < 'N']:
+        :return 'C' =< 100m < 'A' < 1km < 'N', SlipperyCoordinates, time:
         '''
         carPos = (carLat, carLong)
         #check if car coordinates is close to the resultSet (slippery Coordinates)
@@ -62,10 +62,15 @@ class GPSHandler:
             if(distKM < 1):
                 #calculates new distance to slippery path
                 distM = vincenty(carPos, (lat,long)).meters
-                if(distM <= 100):
-                    return 'C',(lat,long) #C for close
+                if(carSpeed != None):
+                    time = (distKM/carSpeed)*60
                 else:
-                    return 'A',(lat,long) #A for approaching
+                    time = None
+
+                if(distM <= 100):
+                    return 'C',(lat,long), time #C for close
+                else:
+                    return 'A',(lat,long), time #A for approaching
 
         #If not stopped by now, by one of the returns. That means that nearby coordinates are not slippery
         return 'N',None #N for none
