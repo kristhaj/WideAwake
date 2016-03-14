@@ -39,7 +39,7 @@ class GPSHandler:
             minLong, maxLong = self.getBetween(carLong)
             query = ("SELECT Latitude, Longitude FROM Coordinates WHERE (carLat BETWEEN minLat AND maxLat) AND (carLong BETWEEN minLong AND maxLong)")
             resultSet = self.connection.getResultset(query)
-            self.validateCoordinates(carLat,carLong,resultSet)
+            return self.validateCoordinates(carLat,carLong,resultSet)
         except Exception as e:
             return None
 

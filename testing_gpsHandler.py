@@ -27,6 +27,7 @@ class MyTestCase(unittest.TestCase):
         for i in range(len(list)):
             time1 = self.list[i]["timestamp"]
             if(self.list[i+1]["end_of_script"] == True):
+                #i is at the last timestamp
                 None
             else:
                 name = self.list[i]["name"]
