@@ -9,12 +9,12 @@ class Car:
 	speed = (0,0)
 	tripCounter = 0
 
-	def __init__(self, tripPath=None, wantedAtt=None):
+	def __init__(self, tripPath = None, wantedAtt = None):
 		self.long = (0,0)
 		self.lat = (0,0)
 		self.speed = (0,0)
 		self.tripCounter = 0
-		if(tripPath==None and wantedAtt==None):
+		if(tripPath == None and wantedAtt == None):
 			self.json = jsonParser.JsonParser()
 			self.trip = self.json.getResources(self.json.getPath())
 		else:
@@ -24,6 +24,15 @@ class Car:
 
 	def getTrip(self):
 		return self.trip
+
+	def setTrip(self, path, wantedAtt=json.getWantedAttributes()):
+		self.tripCounter = 0
+		self.long = (0,0)
+		self.lat = (0,0)
+		self.speed = (0,0)
+		self.json.setPath(path)
+		self.json.setWantedAttributes(wantedAtt)
+		self.trip = self.json.getResources(path)
 
 	def getJson(self):
 		return self.json
