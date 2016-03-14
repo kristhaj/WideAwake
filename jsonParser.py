@@ -39,7 +39,7 @@ class JsonParser:
 		self.pathName = newPath
 
 	def setWantedAttributes(self, attributeDict):
-		wantedAttributes = attributeDict
+		self.wantedAttributes = attributeDict
 
 	def addWantedAttribute(self, attribute,bool):
 		self.wantedAttributes[attribute] = bool
@@ -53,16 +53,16 @@ class JsonParser:
 		if attName in self.wantedAttributes:
 			return self.wantedAttributes[attName]
 		else:
-			print(attName)
+			print(attName) #Will print attName for attList incase we havn't come across it jet
 
 
 	def getResources(self,pathname=pathName):
 		jfile = list()
 		with open(pathname) as f:
 			for line in f:
-				if self.isAttributeWanted(line):
+				if not(self.isAttributeWanted(line)):
 					continue
 				temp = json.loads(line)
 				jfile.append(temp)
-		jfile.append({"end_of_script":"True"})
+		jfile.append({'end_of_script':True})
 		return jfile
