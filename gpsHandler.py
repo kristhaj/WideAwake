@@ -1,7 +1,5 @@
-print("start")
 import dbConnection
 from geopy.distance import vincenty
-print("end")
 
 class GPSHandler:
     connection = None
