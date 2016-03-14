@@ -1,5 +1,5 @@
 print("start")
-import dbConnectionTest
+import dbConnection
 from geopy.distance import vincenty
 print("end")
 
@@ -51,7 +51,7 @@ class GPSHandler:
 
 
 def main():
-    con = dbConnectionTest
+    con = dbConnection
     con.getConnection()
     handler = GPSHandler()
     handler.setConnection(con)
