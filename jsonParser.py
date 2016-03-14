@@ -6,7 +6,7 @@ class JsonParser:
 	wantedAttributes = dict()
 	pathName = ""
 
-	def JsonParser(self):
+	def __init__(self):
 		self.wantedAttributes = {
 			'accelerator_pedal_position': False,
 			'engine_speed': False,
