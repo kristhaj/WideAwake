@@ -63,7 +63,7 @@ class GPSHandler:
                 #calculates new distance to slippery path
                 distM = vincenty(carPos, (lat,long)).meters
                 if(carSpeed != None):
-                    time = (distKM/carSpeed)*60
+                    time = (distKM/carSpeed*1.6)*60
                 else:
                     time = None
 
