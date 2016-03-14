@@ -35,13 +35,13 @@ class GPSHandler:
         :return 'C' =< 100m < 'A' < 1km < 'N']:
         '''
         try:
-            minLat, maxLat = self.getBetween(carLat)
-            minLong, maxLong = self.getBetween(carLong)
-            query = ("SELECT Latitude, Longitude FROM Coordinates WHERE (carLat BETWEEN minLat AND maxLat) AND (carLong BETWEEN minLong AND maxLong)")
-            resultSet = self.connection.getResultset(query)
+            lat = self.getBetween(carLat)
+            long = self.getBetween(carLong)
+            query = ("SELECT Latitude, Longitude FROM Coordinates WHERE ("+str(carLat)+" BETWEEN "+str(lat[0])+" AND "+str(lat[1])+") AND ("+str(carLong)+" BETWEEN "+str(long[0])+" AND "+str(long[1])+")")
+            resultSet = self.connection.getResultSet(query)
             return self.validateCoordinates(carLat,carLong,resultSet,None)
         except Exception as e:
-            return None
+            return "compare" +str(e)
 
     def validateCoordinates(self, carLat, carLong, resultSet, carSpeed):
         '''
@@ -68,12 +68,12 @@ class GPSHandler:
                     time = None
 
                 if(distM <= 100):
-                    return 'C',(lat,long), time #C for close
+                    return 'C', (lat, long), time #C for close
                 else:
-                    return 'A',(lat,long), time #A for approaching
+                    return 'A', (lat, long), time #A for approaching
 
         #If not stopped by now, by one of the returns. That means that nearby coordinates are not slippery
-        return 'N',None #N for none
+        return ('N', None) #N for none
 
 
     def getBetween(self, coordinate):
@@ -91,9 +91,9 @@ class GPSHandler:
         """
         precision = len(str(coordinate).split(".")[1])
         number = "0."+'0'*(precision-2)+"2"
-        maxNumber = round((coordinate + float(number)),precision)
-        minNumber = round((coordinate - float(number),precision))
-        return minNumber,maxNumber
+        maxNumber = (coordinate + float(number))
+        minNumber = (coordinate - float(number))
+        return (minNumber, maxNumber)
 
 
 def main():

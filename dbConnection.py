@@ -117,7 +117,7 @@ class DBConnection:
     def getResultSet(self,query):
         try:
             self.cursor.execute(query)
-            self.toString()
+            #self.toString()
             print("Successfully pulled from database")
             return self.cursor
         except Exception:
