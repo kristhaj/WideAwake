@@ -106,7 +106,7 @@ def main():
     print("created handler")
     state = handler.setConnection(con)
     print("handler set connection " + str(state))
-    luck = handler.compareCoordinates(40.768967,-73.993202)
+    luck = handler.compareCoordinates(40.768967,-73.993202) #Car pos that should match 'C' with coordinates in database.
     print("handler compared coordinates")
     print(luck)
     print(luck[0])
