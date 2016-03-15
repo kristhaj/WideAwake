@@ -97,10 +97,19 @@ class GPSHandler:
 
 
 def main():
-    con = dbConnection
+    print("start")
+    con = dbConnection.DBConnection()
+    print("con should be object now")
     con.getConnection()
+    print("con should have connection")
     handler = GPSHandler()
-    handler.setConnection(con)
+    print("created handler")
+    state = handler.setConnection(con)
+    print("handler set connection " + str(state))
+    luck = handler.compareCoordinates(40.768967,-73.993202)
+    print("handler compared coordinates")
+    print(luck)
+    print(luck[0])
 
-#main()
+main()
 
