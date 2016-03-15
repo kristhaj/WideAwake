@@ -159,4 +159,4 @@ def main():
     else:
         print("could not connect to the database")
 
-main()
+#main()
