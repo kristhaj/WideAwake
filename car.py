@@ -2,13 +2,6 @@ import jsonParser
 
 class Car:
 
-	json = jsonParser.JsonParser()
-	trip = []
-	long = (0,0)
-	lat = (0,0)
-	speed = (0,0)
-	tripCounter = 0
-
 	def __init__(self, tripPath = None, wantedAtt = None):
 		self.long = (0,0)
 		self.lat = (0,0)
