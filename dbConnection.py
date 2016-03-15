@@ -118,10 +118,19 @@ class DBConnection:
         try:
             self.cursor.execute(query)
             #self.toString()
+            resultSet = self.toList()
             print("Successfully pulled from database")
-            return self.cursor
+            return resultSet
         except Exception:
             return False
+
+
+    def toList(self):
+        result = []
+        for (latitude, longitude) in self.cursor:
+            result.append((latitude,longitude))
+
+        return result
 
 
     def toString(self):
