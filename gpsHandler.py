@@ -41,7 +41,7 @@ class GPSHandler:
             resultSet = self.connection.getResultSet(query)
             return self.validateCoordinates(carLat,carLong,resultSet,None)
         except Exception as e:
-            return "compare" +str(e)
+            return "compare: " +str(e)
 
     def validateCoordinates(self, carLat, carLong, resultSet, carSpeed):
         '''
@@ -57,20 +57,20 @@ class GPSHandler:
         '''
         carPos = (carLat, carLong)
         #check if car coordinates is close to the resultSet (slippery Coordinates)
-        for (lat, long) in resultSet:
-            distKM = vincenty(carPos, (lat,long)).km
+        for tup in resultSet:
+            distKM = vincenty(carPos, tup).km
             if(distKM < 1):
                 #calculates new distance to slippery path
-                distM = vincenty(carPos, (lat,long)).meters
+                distM = vincenty(carPos, tup).meters
                 if(carSpeed != None):
                     time = (distKM/carSpeed*1.6)*60
                 else:
                     time = None
 
                 if(distM <= 100):
-                    return 'C', (lat, long), time #C for close
+                    return 'C', tup, time #C for close
                 else:
-                    return 'A', (lat, long), time #A for approaching
+                    return 'A', tup, time #A for approaching
 
         #If not stopped by now, by one of the returns. That means that nearby coordinates are not slippery
         return ('N', None) #N for none
@@ -110,6 +110,9 @@ def main():
     print("handler compared coordinates")
     print(luck)
     print(luck[0])
+    print("Shall now try and print resultset")
+    print(con.getResultSet(query = ("SELECT Latitude, Longitude FROM Coordinates")))
+
 
 main()
 
