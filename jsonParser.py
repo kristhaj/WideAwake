@@ -97,7 +97,8 @@ class JsonParser:
 			print(attName) #Will print attName for attList incase we havn't come across it jet
 
 
-	def getResources(self,pathname=pathName):
+	def getResources(self,pathname):
+		#=pathName
 		'''
 		Returns a list of jsonobjects as dictionaries based on the wanted attributes, ignores the unwanted ones.
 		:param pathname: Should take its own path as default, but doesn't at the moment, so needs a path to run.
