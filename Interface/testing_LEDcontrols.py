@@ -27,3 +27,5 @@ class LEDtester():
         LEDcontrols.LEDcontrols.blinkLeds(LEDcontrols.LEDcontrols.leds)
         time.sleep(5)
         LEDtester.testModes()
+        
+LEDtester.main()
