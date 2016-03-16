@@ -3,6 +3,7 @@ from dbConnection import DBConnection
 from gpsHandler import GPSHandler
 from car import Car
 from jsonParser import JsonParser
+import sqlite3
 import time
 import sys
 
@@ -48,6 +49,9 @@ def main():
 
     except:
         print("Kunne ikke koble til database")
+        #ledKontroll = LEDcontrols
+        #ledKontroll.setUpLeds()
+        #ledKontroll.safeMode()
 
 
 
@@ -57,7 +61,7 @@ def main():
 
 
 
-    print(cache)
+
     connection.closeConnection()
 
 
