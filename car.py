@@ -18,7 +18,8 @@ class Car:
 	def getTrip(self):
 		return self.trip
 
-	def setTrip(self, path, wantedAtt=json.getWantedAttributes()):
+	def setTrip(self, path, wantedAtt):
+		#=self.json.getWantedAttributes()
 		self.tripCounter = 0
 		self.long = (0,0)
 		self.lat = (0,0)
