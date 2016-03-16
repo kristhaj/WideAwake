@@ -2,7 +2,8 @@ import dbConnection
 from geopy.distance import vincenty
 
 class GPSHandler:
-    connection = None
+    def __init__(self):
+        self.connection = None
 
     def setConnection(self,dbConnection):
         """
