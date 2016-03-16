@@ -13,9 +13,9 @@ class LEDcontrols:
     leds = [greenLED, yellowLED, redLED]
 
 
-    def __init__(self, connection):
+    def __init__(self,connection):
         self.internetConnection = connection;
-        self.setUpLeds(self.greenLED, self.yellowLED, self.redLED)
+        self.setUpLeds([17, 22, 27])
 
     def safe(self):
         if (self.internetConnection):
@@ -29,12 +29,12 @@ class LEDcontrols:
             self.redOff()
 
 
-    def setUpLeds(*leds):
+    def setUpLeds(self,leds):
         GPIO.setmode(GPIO.BCM)#enables board pin numbering
         for led in leds:
             GPIO.setup(led, GPIO.OUT)
 
-    def blinkLeds(*leds): #Can be run if you want to see if all the LEDS are working
+    def blinkLeds(self,leds): #Can be run if you want to see if all the LEDS are working
 
         for led in leds:
             GPIO.output(led, True)
