@@ -6,21 +6,21 @@ from mysql.connector import errorcode
 import dbConfig
 
 class DBConnection:
+    def __init__(self):
+        self.cnx = None
+        self.cursor = None
 
-    cnx = None
-    cursor = None
+        usr = dbConfig.getUsr()
+        pwd = dbConfig.getPwd()
+        host = dbConfig.getHost()
+        db = dbConfig.getDB()
 
-    usr = dbConfig.getUsr()
-    pwd = dbConfig.getPwd()
-    host = dbConfig.getHost()
-    db = dbConfig.getDB()
-
-    #Connection configurations
-    config = {'user': usr,
-              'password': pwd,
-              'host': host,
-              'database': db,
-              }
+        #Connection configurations
+        self.config = {'user': usr,
+                  'password': pwd,
+                  'host': host,
+                  'database': db,
+                  }
 
     def getConnection(self):
         """
