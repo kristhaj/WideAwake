@@ -10,6 +10,7 @@ class LEDcontrols:
     redLED = 22 #pin number of red LED
     yellowLED = 27 #Pin number of yellow LED
     internetConnection = True
+    leds = [greenLED, yellowLED, redLED]
 
 
     def __init__(self, connection):
@@ -46,6 +47,7 @@ class LEDcontrols:
         self.greenOff()
         self.yellowOff()
         self.redOn()
+        time.sleep(numberOfSeconds)
 
 
 
