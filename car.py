@@ -1,8 +1,17 @@
 import jsonParser
 
 class Car:
-
+	'''
+	This class is meant to simulate a car as it is driving, by changing it's attributes/variables as it reads through a
+	json object of testdata using its tripcounter.
+	'''
 	def __init__(self, tripPath = None, wantedAtt = None):
+		'''
+		Initialises with the default jsonParser values as the trip.
+		:param tripPath: Uses jsonParsers default path to json object if not given.
+		:param wantedAtt: Uses jsonParsers default trip attributes if not given.
+		:return:
+		'''
 		self.long = (0,0)
 		self.lat = (0,0)
 		self.speed = (0,0)
@@ -16,9 +25,20 @@ class Car:
 			self.trip = self.json.getResources()
 
 	def getTrip(self):
+		'''
+		Returns a list of dicts containing a attribute given by name, value and timestamp.
+		:return: List of ditcs.
+		'''
 		return self.trip
 
 	def setTrip(self, path, wantedAtt):
+		'''
+		Gives the car a new trip by reading in a json file through jsonParser, using the given path and wanted attributes
+		:param path: Path to the json file.
+		:param wantedAtt: Dictionary of all attributes from the json file choosing true/false for which attributes one wants.
+				{"speed":True}
+		:return: None
+		'''
 		#=self.json.getWantedAttributes()
 		self.tripCounter = 0
 		self.long = (0,0)
@@ -29,9 +49,18 @@ class Car:
 		self.trip = self.json.getResources(path)
 
 	def getJson(self):
+		'''
+		The jsonParser connected to the car's trip
+		:return: jsonParser
+		'''
 		return self.json
 
 	def next(self):
+		'''
+		The driving simulator. When called it reads one line of data from its trip list and changes the cars attributes
+		depending on the name of the value. If the value is "end_of_script" the trip is done and this function returns false.
+		:return: false if the trip is over, or true if it is still going.
+		'''
 		tempName = self.trip[self.tripCounter]['name']
 		tempVal = self.trip[self.tripCounter]['value']
 		if "vehicle_speed" == tempName:
