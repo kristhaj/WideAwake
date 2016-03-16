@@ -7,9 +7,7 @@ class JsonParser:
 	files are on over 1 million lines, this parser should only be used as a setup since it takes time to traverse a
 	whole file.
 	'''
-	wantedAttributes = dict()
-	pathName = ""
-
+	
 	def __init__(self):
 		'''
 		Sets the default jsonfile as downtown-crosstown.json and wantedAttributes.
