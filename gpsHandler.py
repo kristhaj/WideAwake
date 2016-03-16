@@ -2,7 +2,15 @@ import dbConnection
 from geopy.distance import vincenty
 
 class GPSHandler:
+    '''
+    This class takes in the cars positions, database connection and car speed. Then calculates nearby coordinates, makes a SQL query
+    compares cars position against coordinates in resultset fram db. returns tuples (comparison, nearby coordinates, eta)
+    '''
     def __init__(self):
+        '''
+        Sets the class variables static.
+        :return:  Nothing
+        '''
         self.connection = None
 
     def setConnection(self,dbConnection):

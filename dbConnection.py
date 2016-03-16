@@ -6,7 +6,14 @@ from mysql.connector import errorcode
 import dbConfig
 
 class DBConnection:
+    '''
+    This class sets the database connection and handles all SQL statements and querys to the database.
+    '''
     def __init__(self):
+        '''
+        This sets all the class variables static and initializes
+        :return: Nothing
+        '''
         self.cnx = None
         self.cursor = None
 
@@ -108,13 +115,19 @@ class DBConnection:
         """
         try:
             self.cursor.execute(self.query)
-            self.toString()
+            #self.toString()
             print("Successfully pulled from database")
             return True
         except Exception:
             return False
 
     def getResultSet(self,query):
+        '''
+        Pulls gps coordinates from the database Returns the resultset as a list containg coordinates as tuples (lat,long)
+        :resultSet: list with tuples (lat,long) from database.
+        :param query: SQL query to execute.
+        :return: resultSet as list with tuples or False.
+        '''
         try:
             self.cursor.execute(query)
             #self.toString()
@@ -126,6 +139,10 @@ class DBConnection:
 
 
     def toList(self):
+        '''
+        Creates and Appends all tuples in database to a list and then returns this list.
+        :return: List with tuples from database.
+        '''
         result = []
         for (latitude, longitude) in self.cursor:
             result.append((latitude,longitude))
