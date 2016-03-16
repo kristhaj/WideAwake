@@ -114,5 +114,5 @@ def main():
     print(con.getResultSet(query = ("SELECT Latitude, Longitude FROM Coordinates")))
 
 
-main()
+#main()
 
