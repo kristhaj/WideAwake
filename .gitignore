@@ -58,3 +58,4 @@ fabric.properties
 .idea/*
 dbConfig.py
 __pycache__
+Resources/test.json
