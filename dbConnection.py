@@ -92,7 +92,7 @@ class DBConnection:
             cursor.execute(add_testCoordinates)
             self.cnx.commit()
             cursor.close()
-            print("Successfylly pushed to database")
+            #print("Successfylly pushed to database")
             return True
     #This exception is raised when the relational integrity of the data is affected. For example, a duplicate key was inserted or a foreign key constraint would fail.
         except mysql.connector.IntegrityError as err:
@@ -116,7 +116,7 @@ class DBConnection:
         try:
             self.cursor.execute(self.query)
             #self.toString()
-            print("Successfully pulled from database")
+            #print("Successfully pulled from database")
             return True
         except Exception:
             return False
@@ -132,7 +132,7 @@ class DBConnection:
             self.cursor.execute(query)
             #self.toString()
             resultSet = self.toList()
-            print("Successfully pulled from database")
+            #print("Successfully pulled from database")
             return resultSet
         except Exception:
             return False
