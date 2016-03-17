@@ -16,9 +16,9 @@ def main():
         connection = DBConnection()
         connection.connectToDB()
 
-        #ledKontroll = LEDcontrols
-        #ledKontroll.setUpLeds()
-       # ledKontroll.safeMode()
+        #ledKontroll = LEDcontrols.LEDcontrols(connection)
+        #ledKontroll.setUpLeds(ledKontroll.leds)
+        #ledKontroll.safeMode()
 
 
         #Henter data fra database slik at den kan lagres på lokal database(SQLite)
@@ -32,7 +32,16 @@ def main():
         car = Car()
 
         #Går gjennom testdata når koblet til database
-        while(car.next()):
+
+
+
+    except:
+        print("Kunne ikke koble til database")
+        #ledKontroll = LEDcontrols
+        #ledKontroll.setUpLeds()
+        #ledKontroll.safeMode()
+
+    while(car.next()):
             if(car.tripCounter % 50 == 0):
                 print(car.tripCounter)
                 carSpeed = car.speed[0]
@@ -48,16 +57,6 @@ def main():
                     elif(gpsState[0] == 'N'):
                         print("Carry on")
                         #ledkontroll.safeMode(1)
-
-
-    except:
-        print("Kunne ikke koble til database")
-        #ledKontroll = LEDcontrols
-        #ledKontroll.setUpLeds()
-        #ledKontroll.safeMode()
-
-
-
 
 
 
