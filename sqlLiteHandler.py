@@ -42,6 +42,35 @@ class SQLLite:
         except:
             return False
 
+    def updateLocalDatabase(self,resultSet):
+        '''
+        Empties the local database and then
+        Updates the local database with the last online resultSet from database
+        :param resultSet: the resultset from cloud-database
+        :return: true if inserted all tuples and updated local database. Else False
+        '''
+
+        try:
+            self.deleteLocalDatabase()
+            for tup in resultSet:
+                self.executeInsertStatement(self.createInsertStatment(tup[0],tup[1]))
+            return True
+        except Exception as e:
+            return "False:" + str(e)
+
+    def deleteLocalDatabase(self):
+        '''
+        Deletes all the data in the local database. Doesn't delte tabel structure.
+        :return: True if deleted and commit the deletes, else False
+        '''
+        try:
+            self.cursor.execute("DELETE FROM WideAwakeTrip")
+            self.connection.commit()
+            return True
+        except Exception as e:
+            return  "False: " + str(e)
+
+
     def executeQueryStatement(self):
         '''
         Executes the query statement and returns resultset.
@@ -91,11 +120,21 @@ def main():
     path = "Resources/WideAwakeCoordinates.db"
     conn = SQLLite(path)
     conn.establishConnection()
-    lat = 10.11006
-    long = 11.10006
+    lat = 10.11007
+    long = 11.10007
     conn.executeInsertStatement(conn.createInsertStatment(lat,long))
     rs = conn.executeQueryStatement()
     print(rs)
+    print("*"*50)
+    print("prøve å slette alt")
+    print(conn.deleteLocalDatabase())
+    rs1 = conn.executeQueryStatement()
+    print(rs1)
+    print("*"*50)
+    print(conn.updateLocalDatabase(rs))
+    rs2 = conn.executeQueryStatement()
+    print(rs2)
+    print("*"*50)
     conn.closeConnection()
 
-#main()
+main()
