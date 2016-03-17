@@ -9,16 +9,14 @@ class LEDcontrols:
     greenLED = 17 #pin number of green LED
     redLED = 22 #pin number of red LED
     yellowLED = 27 #Pin number of yellow LED
-    internetConnection = True
     leds = [greenLED, yellowLED, redLED]
 
 
-    def __init__(self,connection):
-        self.internetConnection = connection;
+    def __init__(self):
         self.setUpLeds([17, 22, 27])
 
-    def safe(self):
-        if (self.internetConnection):
+    def safe(self, connection):
+        if (connection):
             self.greenOn()
             self.yellowOff()
             self.redOff()
@@ -79,7 +77,7 @@ class LEDcontrols:
         GPIO.output(self.yellowLED, False)
 
     def boot(self):
-        self.blinkLeds(self.redLED, self.yellowLED, self.greenLED)
+        self.blinkLeds(self.leds)
 
 
     def shutdown(self): #Turns off power to our pins and cleans up the ports (sets them to INPUT to protect the circuit)
