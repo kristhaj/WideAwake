@@ -16,9 +16,9 @@ def main():
         connection = DBConnection()
         connection.connectToDB()
 
-        #ledKontroll = LEDcontrols
-        #ledKontroll.setUpLeds()
-       # ledKontroll.safeMode()
+        #ledKontroll = LEDcontrols.LEDcontrols(connection)
+        #ledKontroll.setUpLeds(ledKontroll.leds)
+        #ledKontroll.safeMode()
 
 
         #Henter data fra database slik at den kan lagres på lokal database(SQLite)
