@@ -16,6 +16,7 @@ class LEDcontrols:
         self.setUpLeds([17, 22, 27])
 
     def safe(self, connection):
+        self.dangerMode(False)
         if (connection):
             self.greenOn()
             self.yellowOff()
@@ -41,22 +42,25 @@ class LEDcontrols:
 
 
 
-    def warningMode(self, numberOfSeconds): #Enter warning mode (yellow blinking) for the desired number of seconds
+    def warningMode(self): #Enter warning mode (redLED on) for the desired number of seconds
+        self.dangerMode(False)
         self.greenOff()
         self.yellowOff()
         self.redOn()
-        time.sleep(numberOfSeconds)
 
 
 
-    def dangerMode(self, numberOfSeconds): #Enter danger mode (red blinking) for numberOfSeconds
+    def dangerMode(self, bool): #Enter danger mode (red blinking) for numberOfSeconds
         self.yellowOff()
         self.greenOff()
-        for i in range(0, numberOfSeconds):
-            self.redOn()
-            time.sleep(0.5)
-            self.redOff()
-            time.sleep(0.5)
+        while True:
+            if (bool):
+                self.redOn()
+                time.sleep(0.5)
+                self.redOff()
+                time.sleep(0.5)
+            else:
+                break
 
 
 
