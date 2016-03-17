@@ -111,5 +111,5 @@ class JsonParser:
 					continue
 				temp = json.loads(line)
 				jfile.append(temp)
-		jfile.append({'end_of_script':True})
+		jfile.append({'end_of_script':True, 'name':'end_of_script','value':'end_of_script'})
 		return jfile
