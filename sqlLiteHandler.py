@@ -91,8 +91,8 @@ def main():
     path = "Resources/WideAwakeCoordinates.db"
     conn = SQLLite(path)
     conn.establishConnection()
-    lat = 10.11005
-    long = 11.10005
+    lat = 10.11006
+    long = 11.10006
     conn.executeInsertStatement(conn.createInsertStatment(lat,long))
     rs = conn.executeQueryStatement()
     print(rs)
