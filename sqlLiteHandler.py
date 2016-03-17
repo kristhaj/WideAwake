@@ -31,9 +31,12 @@ class SQLLite:
         self.cursor.execute(query)
         self.connection.commit()
 
-    def executeQueryStatement(self,query):
+    def executeQueryStatement(self):
         '''
         '''
+        query = "SELECT * FROM WideAwakeTrip"
+        self.cursor.execute(query)
+        return self.createResultSet()
 
     def createResultSet(self):
         '''
@@ -45,7 +48,6 @@ class SQLLite:
         resultSet = []
         for row in self.cursor:
             resultSet.append(row)
-            print(row)
         return resultSet
 
     def closeConnection(self):
@@ -62,9 +64,11 @@ def main():
     path = "Resources/WideAwakeCoordinates.db"
     conn = SQLLite(path)
     conn.establishConnection()
-    lat = 10.11004
-    long = 11.10004
+    lat = 10.11005
+    long = 11.10005
     conn.executeInsertStatement(conn.createInsertStatment(lat,long))
+    rs = conn.executeQueryStatement()
+    print(rs)
     conn.closeConnection()
 
 main()
