@@ -34,7 +34,6 @@ def main():
         #Går gjennom testdata når koblet til database
         while(car.next()):
             if(car.tripCounter % 50 == 0):
-                print(car.tripCounter)
                 carSpeed = car.speed[0]
                 if(carSpeed > 5):
                     #Finner om det er innkommende farlig veistrekke
