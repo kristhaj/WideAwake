@@ -1,4 +1,4 @@
-from Interface import LEDcontrols
+#from Interface import LEDcontrols
 from dbConnection import DBConnection
 from gpsHandler import GPSHandler
 from car import Car
@@ -16,9 +16,9 @@ def main():
         connection = DBConnection()
         connection.connectToDB()
 
-        ledKontroll = LEDcontrols.LEDcontrols()
-        ledKontroll.setUpLeds(ledKontroll.leds)
-        ledKontroll.safe(True)
+        #ledKontroll = LEDcontrols.LEDcontrols()
+        #ledKontroll.setUpLeds(ledKontroll.leds)
+        #ledKontroll.safe(True)
 
 
         #Henter data fra database slik at den kan lagres på lokal database(SQLite)
@@ -41,13 +41,13 @@ def main():
                     gpsState = handler.compareCoordinates(car.lat[0], car.long[0])
                     if (gpsState[0] == 'A'):
                         print("DANGER")
-                        ledKontroll.dangerMode(True)
+         #               ledKontroll.dangerMode(True)
                     elif(gpsState[0] == 'C'):
                         print("Warning")
-                        ledKontroll.warningMode()
+          #              ledKontroll.warningMode()
                     elif(gpsState[0] == 'N'):
                         print("Carry on")
-                        ledKontroll.safe(True)
+           #             ledKontroll.safe(True)
 
 
     except:
