@@ -33,19 +33,22 @@ def main():
 
         #Går gjennom testdata når koblet til database
         while(car.next()):
-            carSpeed = car.speed[0]
-            if(carSpeed > 5):
-                #Finner om det er innkommende farlig veistrekke
-                gpsState = handler.compareCoordinates(car.lat[0], car.long[0])
-                if (gpsState[0] == 'A'):
-                    print("DANGER")
-                    #ledkontroll.dangerMode(1)
-                elif(gpsState[0] == 'C'):
-                    print("Warning")
-                    #ledkontroll.warningMode(1)
-                elif(gpsState[0] == 'N'):
-                    print("Carry on")
-                    #ledkontroll.safeMode(1)
+            if(car.tripCounter % 50 == 0):
+                print(car.tripCounter)
+                carSpeed = car.speed[0]
+                if(carSpeed > 5):
+                    #Finner om det er innkommende farlig veistrekke
+                    gpsState = handler.compareCoordinates(car.lat[0], car.long[0])
+                    if (gpsState[0] == 'A'):
+                        print("DANGER")
+                        #ledkontroll.dangerMode(1)
+                    elif(gpsState[0] == 'C'):
+                        print("Warning")
+                        #ledkontroll.warningMode(1)
+                    elif(gpsState[0] == 'N'):
+                        print("Carry on")
+                        #ledkontroll.safeMode(1)
+
 
     except:
         print("Kunne ikke koble til database")
