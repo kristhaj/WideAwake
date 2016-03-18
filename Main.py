@@ -28,7 +28,7 @@ def main():
         #Laster opp nyeste versjon av database til lokal "database"
         localdbConnection = SQLLite("Resources/WideAwakeCoordinates.db")
         localdbConnection.establishConnection()
-        localdbConnection.updateLocalDatabase(cache)
+        #localdbConnection.updateLocalDatabase(cache)
         localdbConnection.closeConnection()
 
         #Oppretter et GPSHandler objekt som finner avstand fra bil til farlig veistrekke
