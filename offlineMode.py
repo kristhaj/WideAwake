@@ -8,10 +8,10 @@ from gpsHandler import GPSHandler
 
 class OfflineMode:
 
-    def __init__(self):
+    def __init__(self,path):
        # self.interFace = LEDcontrols.LEDcontrols()
         self.handler = GPSHandler()
-        self.sqlite = SQLLite()
+        self.sqlite = SQLLite(path)
         self.clat = 0
         self.clong = 0
 
