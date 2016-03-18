@@ -84,6 +84,12 @@ class SQLLite:
             return False
 
     def getResultSet(self,query):
+        '''
+        Takes in a SQL-statement and return a list with the results
+
+        :param query: SQL-statement
+        :return: Returns a resultSet with the desired rows from database or false
+        '''
         try:
             self.cursor.execute(query)
             return self.createResultSet()
