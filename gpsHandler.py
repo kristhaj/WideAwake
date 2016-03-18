@@ -52,6 +52,29 @@ class GPSHandler:
         except Exception as e:
             return "compare: " +str(e)
 
+    def offlineCompareCoordinates(self, carLat,carLong):
+        '''
+        This takes in the car's coordiantes, calculates the minimum and maximum distance coordinates from the car to comapre to.
+        creates a SQL query S-F-W statement. Executes the query, and saves the result set. Then checks car position in distance
+        aginst the coordinates in the resultset
+
+        :param carLat: Car latitude coordinate
+        :param carLong: Car longitude coordinate
+        :minLat: The calculated minimum distance difference between car and database coordinates
+        :maxLat: The calculated maximum distance difference between car and database coordinates
+        :resultSet: The resultset from the query
+        :query: SQL-query that uses the min and max values in the where clause.
+        :return 'C' =< 100m < 'A' < 1km < 'N']:
+        '''
+        try:
+            lat = self.getBetween(carLat)
+            long = self.getBetween(carLong)
+            query = ("SELECT Latitude, Longitude FROM WideAwakeTrip WHERE ("+str(carLat)+" BETWEEN "+str(lat[0])+" AND "+str(lat[1])+") AND ("+str(carLong)+" BETWEEN "+str(long[0])+" AND "+str(long[1])+")")
+            resultSet = self.connection.getResultSet(query)
+            return self.validateCoordinates(carLat,carLong,resultSet,None)
+        except Exception as e:
+            return "compare: " +str(e)
+
     def validateCoordinates(self, carLat, carLong, resultSet, carSpeed):
         '''
         This validates the car distance difference in km and/or meters against the coordinates in the resultset.
