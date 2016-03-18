@@ -137,4 +137,4 @@ def main():
     print("*"*50)
     conn.closeConnection()
 
-main()
+#main()
