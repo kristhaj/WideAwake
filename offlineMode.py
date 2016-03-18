@@ -4,12 +4,12 @@ inneholde en cach / lokal database versjon med siste online versjon av databasen
 '''
 from sqlLiteHandler import SQLLite
 from gpsHandler import GPSHandler
-from Interface import LEDcontrols
+#from Interface import LEDcontrols
 
 class OfflineMode:
 
     def __init__(self):
-        self.interFace = LEDcontrols.LEDcontrols()
+       # self.interFace = LEDcontrols.LEDcontrols()
         self.handler = GPSHandler()
         self.sqlite = SQLLite()
         self.clat = 0
@@ -17,8 +17,9 @@ class OfflineMode:
 
 
     def notifyDriverOffline(self):
-        self.interFace.setUpLeds(self.interFace.leds)
-        self.interFace.safe(False)
+        #self.interFace.setUpLeds(self.interFace.leds)
+        #self.interFace.safe(False)
+        print("offline")
 
     def compareCoordinates(self,carLat,carLong,carSpeed):
         rs = self.sqlite.executeQueryStatement()
