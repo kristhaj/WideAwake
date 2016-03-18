@@ -83,6 +83,13 @@ class SQLLite:
         except:
             return False
 
+    def getResultSet(self,query):
+        try:
+            self.cursor.execute(query)
+            return self.createResultSet()
+        except:
+            return False
+
     def createResultSet(self):
         '''
         This function creates the result set. Iterates through the cursor (tuple for tuple)
