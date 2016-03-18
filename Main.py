@@ -1,5 +1,6 @@
 #from Interface import LEDcontrols
 from dbConnection import DBConnection
+from sqlLiteHandler import SQLLite
 from gpsHandler import GPSHandler
 from car import Car
 from jsonParser import JsonParser
@@ -23,6 +24,12 @@ def main():
 
         #Henter data fra database slik at den kan lagres på lokal database(SQLite)
         cache = connection.getResultSet("SELECT Latitude,Longitude FROM Coordinates")
+
+        #Laster opp nyeste versjon av database til lokal "database"
+        localdbConnection = SQLLite("Resources/WideAwakeCoordinates.db")
+        localdbConnection.establishConnection()
+        localdbConnection.updateLocalDatabase(cache)
+        localdbConnection.closeConnection()
 
         #Oppretter et GPSHandler objekt som finner avstand fra bil til farlig veistrekke
         handler = GPSHandler()
