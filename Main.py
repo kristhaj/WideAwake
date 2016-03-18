@@ -3,6 +3,7 @@ from dbConnection import DBConnection
 from sqlLiteHandler import SQLLite
 from gpsHandler import GPSHandler
 from car import Car
+from offlineMode import OfflineMode
 from jsonParser import JsonParser
 import sqlite3
 import time
@@ -17,6 +18,7 @@ def main():
         connection = DBConnection()
         connection.connectToDB()
 
+        #Oppretter et ledkontroll objekt
         #ledKontroll = LEDcontrols.LEDcontrols()
         #ledKontroll.setUpLeds(ledKontroll.leds)
         #ledKontroll.safe(True)
@@ -58,18 +60,48 @@ def main():
 
     except:
         print("Kunne ikke koble til database")
-        #ledKontroll = LEDcontrols
-        #ledKontroll.setUpLeds()
-        #ledKontroll.safeMode()
+        #Oppretter testobjekt
+        offlineCar = Car()
+
+        #Kobler til lokal database
+        offlineConnection = SQLLite("Resources/WideAwakeCoordinates.db")
+        offlineConnection.establishConnection()
+
+        #Oppretter et GPSHandler objekt som finner avstand fra bil til farlig veistrekke
+        offlineHandler = GPSHandler()
+        print("Funker det?")
+        offlineHandler.setConnection(offlineConnection)
+        print("oh'yes")
+
+        #Går gjennom testdata når koblet til lokal database
+        while(offlineCar.next()):
+            if(offlineCar.tripCounter % 50 == 0):
+                carSpeed = offlineCar.speed[0]
+                if(carSpeed > 5):
+                    #Finner om det er innkommende farlig veistrekke
+                    gpsState = offlineHandler.offlineCompareCoordinates(offlineCar.lat[0], offlineCar.long[0])
+                    if (gpsState[0] == 'A'):
+                        print("DANGER")
+         #               ledKontroll.dangerMode(True)
+                    elif(gpsState[0] == 'C'):
+                        print("Warning")
+          #              ledKontroll.warningMode()
+                    elif(gpsState[0] == 'N'):
+                        print("Carry on")
+           #             ledKontroll.safe(True)
+
+
+
+
+        #Lukker kobling til sqlite-databasen
+        offlineConnection.closeConnection()
 
 
 
 
 
 
-
-
-
+    # Lukker kobling til mysql-database
     connection.closeConnection()
 
 
