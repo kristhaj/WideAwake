@@ -49,7 +49,7 @@ def main():
     )
     args = parser.parse_args()
 
-    if args.pause > 0:
+    if args.pause < 0:
         print("Pause interval can't be negative")
 
     endtime = time.time() + args.pause
