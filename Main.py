@@ -18,7 +18,7 @@ def main():
         connection = DBConnection()
         connection.connectToDB()
 
-        #Oppretter et ledkontroll objekt
+        #Oppretter et ledkontroll objekt, Un comment this when LED interface is connected.
         #ledKontroll = LEDcontrols.LEDcontrols()
         #ledKontroll.setUpLeds(ledKontroll.leds)
         #ledKontroll.safe(True)
@@ -69,9 +69,7 @@ def main():
 
         #Oppretter et GPSHandler objekt som finner avstand fra bil til farlig veistrekke
         offlineHandler = GPSHandler()
-        print("Funker det?")
         offlineHandler.setConnection(offlineConnection)
-        print("oh'yes")
 
         #Går gjennom testdata når koblet til lokal database
         while(offlineCar.next()):
@@ -92,14 +90,8 @@ def main():
 
 
 
-
         #Lukker kobling til sqlite-databasen
         offlineConnection.closeConnection()
-
-
-
-
-
 
     # Lukker kobling til mysql-database
     connection.closeConnection()
