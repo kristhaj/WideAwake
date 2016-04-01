@@ -33,9 +33,11 @@ def main():
             #Since this exception occured, it means that there is something wrong with the gsmHandler. It could not
             #connect to the gsm module, or the connection did not connect correctly. Notify user that in offline mode.
             #ledKontroll.safe(False)
+            raise Exception # rais this to exit the try online, and go to expect offline
         except Exception as e:
             print(str(e))
             #ledKontroll.safe(False)
+            raise Exception # rais this to exit the try online, and go to expect offline
 
 
 
