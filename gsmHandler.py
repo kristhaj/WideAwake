@@ -32,15 +32,29 @@ class GSMHandler(object):
         If something goes wrong, exceptions is printed, and variable/object is set to False.
         :return: None
         '''
-        self.port = self.getPort() # find the port where the modem is connected.
-        self.baud = 115200 # modem baud rate
-        self.pin = 1235 # sim-pin
-        self.deliver = False # if we want to wait for a deliveryReport
-        self.destination = "0047"
-        self.modem = self.connectToModem() # connect to the modem at the given port.
-        self.unlocked = self._unlockModem() # unlocks the modem with the given sim-pin
-        self.networkCoverage = self.networkCoverage()
-        self.sms = None
+        try:
+            print("GSMHANDLER 1")
+            #self.port = self._getPort() # find the port where the modem is connected.
+            print(1)
+            self.baud = 115200 # modem baud rate
+            print(2)
+            self.pin = 1235 # sim-pin
+            print(3)
+            self.deliver = False # if we want to wait for a deliveryReport
+            print(4)
+            self.destination = "004790909909"
+            print(5)
+            self.modem = self._connectToModem() # connect to the modem at the given port.
+            print(6)
+            self.unlocked = self._unlockModem() # unlocks the modem with the given sim-pin
+            print(7)
+            self.networkCoverage = self.networkCoverage()
+            print(8)
+            self.sms = None
+            print("GSM HANDLER 2")
+        except Exception as e:
+            #print(str(e))
+            raise e
 
     def _getPort(self):
         '''
