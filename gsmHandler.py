@@ -14,6 +14,7 @@ import UnusableSystemException
 from serial.tools.list_ports import grep
 from gsmmodem.modem import GsmModem, SentSms
 from gsmmodem.exceptions import TimeoutException, PinRequiredError, IncorrectPinError
+import UnusableSystemException
 
 
 class GSMHandler(object):
@@ -69,7 +70,7 @@ class GSMHandler(object):
             return True
         except Exception as e:
             print("Something went wrong when trying to connect/find the modem to the modem " + str(e))
-            return False
+            raise UnusableSystemException("Something went wrong when trying to connect/find the modem to the modem " + str(e))
 
     def _unlockModem(self):
         '''
