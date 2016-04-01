@@ -37,7 +37,7 @@ class GSMHandler(object):
         self.destination = "0047"
         self.modem = self.connectToModem() # connect to the modem at the given port.
         self.unlocked = self._unlockModem() # unlocks the modem with the given sim-pin
-        self.networkCoverage = self._networkCoverage()
+        self.networkCoverage = self.networkCoverage()
         self.sms = None
 
     def _getPort(self):
@@ -100,7 +100,7 @@ class GSMHandler(object):
             return False
 
 
-    def _networkCoverage(self):
+    def networkCoverage(self):
         '''
         This takes max five seconds to check if the modem has networkcoverages.
         :return: True if networkCoveragage, else: False
