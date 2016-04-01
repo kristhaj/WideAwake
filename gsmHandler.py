@@ -10,7 +10,8 @@ instead of setting and checking for valid state everytime the GSMHandler object 
 
 import sys, logging
 import gsmmodem
-import serial
+import UnusableSystemException
+from serial.tools.list_ports import grep
 from gsmmodem.modem import GsmModem, SentSms
 from gsmmodem.exceptions import TimeoutException, PinRequiredError, IncorrectPinError
 import UnusableSystemException
@@ -31,7 +32,7 @@ class GSMHandler(object):
         If something goes wrong, exceptions is printed, and variable/object is set to False.
         :return: None
         '''
-        self.port = self.getPort() # find the mort where the modem is connected.
+        self.port = self.getPort() # find the port where the modem is connected.
         self.baud = 115200 # modem baud rate
         self.pin = 1235 # sim-pin
         self.deliver = False # if we want to wait for a deliveryReport
@@ -43,24 +44,16 @@ class GSMHandler(object):
 
     def _getPort(self):
         '''
-        if self.port == None:
-            raise PinRequiredError("getPort did not find a used port")
-        :return: port
+        Not done: Finds the port connecting the gsm doogle to the pi using a ID and grep().
+        Needs to find which value in the tuple grep() returns we need(is the port).
+        :return: portID
         '''
-        port = None
-
-
-        """
-        Search for ports using a regular expression. Port name, description and
-        hardware ID are searched. The function returns an iterable that returns the
-        same tuples as comport() would do.
-
-        r = re.compile(regexp, re.I)
-        for info in comports():
-            port, desc, hwid = info
-            if r.search(port) or r.search(desc) or r.search(hwid):
-                yield info
-        """
+        port = grep("Identifying")
+        if len(port) != 1:
+            if len(port) == 0:
+                raise UnusableSystemException("Could not find the GSM doogle")
+            if len(port)>1:
+                raise UnusableSystemException("Found more then 1 GSM doogle")
         return port
 
 
