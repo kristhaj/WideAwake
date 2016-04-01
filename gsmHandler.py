@@ -142,7 +142,7 @@ class GSMHandler(object):
             return False
 
         try:
-            if(self.networkCoverage == False):
+            if(self._networkCoverage() == False):
                 print("Network signal strength is not sufficient.")
                 return False
 
