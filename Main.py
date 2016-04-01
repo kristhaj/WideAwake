@@ -23,21 +23,26 @@ def main():
     #ledKontroll.setUpLeds(ledKontroll.leds)
     try:
         try:
+            print("Hello")
             gsmHandler = GSMHandler()
+            print(gsmHandler)
             #Kobler til database
             connection = DBConnection()
             connection.connectToDB()
             #ledKontroll.safe(True)
         except UnusableSystemException as e:
+            print("what the")
             print(str(e))
             #Since this exception occured, it means that there is something wrong with the gsmHandler. It could not
             #connect to the gsm module, or the connection did not connect correctly. Notify user that in offline mode.
             #ledKontroll.safe(False)
-            raise Exception # rais this to exit the try online, and go to expect offline
+            raise e # rais this to exit the try online, and go to expect offline
         except Exception as e:
+            print("actuall fuck")
             print(str(e))
             #ledKontroll.safe(False)
-            raise Exception # rais this to exit the try online, and go to expect offline
+            raise e # rais this to exit the try online, and go to expect offline
+
 
 
 
