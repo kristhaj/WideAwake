@@ -106,7 +106,7 @@ class GSMHandler(object):
         :return: True if networkCoveragage, else: False
         '''
         try:
-            self.modem.waitForNetworkCoverage(5)
+            self.networkCoverage = self.modem.waitForNetworkCoverage(5)
             return True
         except TimeoutException as terr:
             print("TimeoutException: " + str(terr))
