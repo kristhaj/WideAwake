@@ -1,5 +1,11 @@
 '''
 @author: Sigve Skaugvoll and Martin Bjerke
+
+Thought of mind is that when initializing a instance of GSMHandler, ther modem port will be found and used to connect
+modem. After this, the modem will be unloced, the modem will check if there is any network coverage.
+
+This cleans up the sending sms code alot. It encurrages to using the GSMHandler as a object with states, that need to be set, before use
+instead of setting and checking for valid state everytime the GSMHandler object is to be used.
 '''
 
 import sys, logging
@@ -13,8 +19,17 @@ class GSMHandler(object):
     '''
     This is a class that sets up the connection to the GSM module, and unlocks the sim.
     This handler will handle the send distress signal.
+
     '''
     def __init__(self):
+        '''
+        This tries to find the port, at which the gsm modem is inserted to.
+        sets the baud rate, pin, deliveryRaport status and destination number.
+        Tries to connect to modem on found port
+        Tries to unlock modem with pin, and checks if there is network coverage.
+        If something goes wrong, exceptions is printed, and variable/object is set to False.
+        :return: None
+        '''
         self.port = self.getPort() # find the mort where the modem is connected.
         self.baud = 115200 # modem baud rate
         self.pin = 1235 # sim-pin
@@ -49,6 +64,11 @@ class GSMHandler(object):
 
 
     def _connectToModem(self):
+        '''
+        Tries to connect to the modem on the found port.
+        handles excpetion if modem not found or couldn't connect.
+        :return: True if connection successfull, else: False
+        '''
         try:
             self.modem = GsmModem(self.port,self.baud)
             print("Connecting to GSM modem on " + str(self.port))
@@ -60,6 +80,12 @@ class GSMHandler(object):
             return False
 
     def _unlockModem(self):
+        '''
+        This tries to unlock the modem and simcard with the pin code.
+        checks for excpetions and handles them.
+        Prints what went wrong.
+        :return: True if unlock successfull, False else.
+        '''
         try:
             self.modem.connect(self.pin)
             return True
@@ -75,6 +101,10 @@ class GSMHandler(object):
 
 
     def _networkCoverage(self):
+        '''
+        This takes max five seconds to check if the modem has networkcoverages.
+        :return: True if networkCoveragage, else: False
+        '''
         try:
             self.modem.waitForNetworkCoverage(5)
             return True
@@ -122,12 +152,3 @@ class GSMHandler(object):
 
         except Exception as exception:
             print("Some unexpected error happen, while trying to send SMS: " + str(exception))
-
-
-'''
-mind of thought is that when initializing a instance of GSMHandler, ther modem port will be found and used to connect
-modem. After this, the modem will be unloced, the modem will check if there is any network coverage.
-
-This cleans up the sending sms code alot. It encurrages to using the GSMHandler as a object with states, that need to be set, before use
-instead of setting and checking for valid state everytime the GSMHandler object is to be used.
-'''
