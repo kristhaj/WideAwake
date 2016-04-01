@@ -2,7 +2,7 @@
 @author: Sigve Skaugvoll and Martin Bjerke
 
 Thought of mind is that when initializing a instance of GSMHandler, the modem port will be found and used to connect
-modem. After this, the modem will be unloced, the modem will check if there is any network coverage.
+modem. After this, the modem will be unlocked, the modem will check if there is any network coverage.
 
 This cleans up the sending sms code alot. It encurrages to using the GSMHandler as a object with states, that need to be set, before use
 instead of setting and checking for valid state everytime the GSMHandler object is to be used.
@@ -66,7 +66,7 @@ class GSMHandler(object):
     def _connectToModem(self):
         '''
         Tries to connect to the modem on the found port.
-        handles excpetion if modem not found or couldn't connect.
+        handles exception if modem not found or couldn't connect.
         :return: True if connection successfull, else: False
         '''
         try:
@@ -114,6 +114,10 @@ class GSMHandler(object):
 
 
     def closeModem(self):
+        '''
+        Closes the modem. Needs to close the port aswell, bjerke fix
+        :return: True if closed properly, else: False
+        '''
         try:
             self.modem.close()
             return True
