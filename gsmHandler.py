@@ -113,6 +113,14 @@ class GSMHandler(object):
             return False
 
 
+    def closeModem(self):
+        try:
+            self.modem.close()
+            return True
+        except Exception as cerr:
+            print("Closing the modem: " + str(cerr))
+            return False
+
 
     def sendThatShit(self, msg):
         '''
