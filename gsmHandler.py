@@ -91,14 +91,11 @@ class GSMHandler(object):
             self.modem.connect(self.pin)
             return True
         except PinRequiredError as perr:
-            print("PinReqiredError: " + str(perr))
-            return False
+            raise UnusableSystemException("PinReqiredError: " + str(perr))
         except IncorrectPinError as ierr:
-            print("IncorrectPinError: " + str(ierr))
-            return False
+            raise UnusableSystemException("IncorrectPinError: " + str(ierr))
         except Exception as e:
-            print("Something went wrong when trying to unlock the modem" + str(e))
-            return False
+            raise UnusableSystemException("Something went wrong when trying to unlock the modem" + str(e))
 
 
     def networkCoverage(self):
@@ -147,7 +144,7 @@ class GSMHandler(object):
             return False
 
         try:
-            if(self._networkCoverage() == False):
+            if(self.networkCoverage() == False):
                 print("Network signal strength is not sufficient.")
                 return False
 
