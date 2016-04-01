@@ -33,7 +33,7 @@ class GSMHandler(object):
         :return: None
         '''
         try:
-            print("GSMHANDLER 1")
+            print("GSMHANDLER Start")
             #self.port = self._getPort() # find the port where the modem is connected.
             print(1)
             self.baud = 115200 # modem baud rate
@@ -51,7 +51,7 @@ class GSMHandler(object):
             self.networkCoverage = self.networkCoverage()
             print(8)
             self.sms = None
-            print("GSM HANDLER 2")
+            print("GSMHANDLER End")
         except Exception as e:
             #print(str(e))
             raise e
@@ -62,12 +62,15 @@ class GSMHandler(object):
         Needs to find which value in the tuple grep() returns we need(is the port).
         :return: portID
         '''
+        print("grepStart")
         port = grep("Identifying")
+        print("grepEnd")
         if len(port) != 1:
             if len(port) == 0:
                 raise UnusableSystemException("Could not find the GSM doogle")
             if len(port)>1:
                 raise UnusableSystemException("Found more then 1 GSM doogle")
+        print(port)
         return port
 
 
