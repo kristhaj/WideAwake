@@ -10,7 +10,7 @@ from jsonParser import JsonParser
 import sqlite3
 import time
 import sys
-
+from Interface import buttonControls
 
 
 
@@ -27,6 +27,9 @@ def main():
     #Create a controller/object to controll the interface. Uncomment this when LED interface is connected
     #ledKontroll = LEDcontrols.LEDcontrols()
     #ledKontroll.setUpLeds(ledKontroll.leds)
+
+    #create controller object to controll the buttons
+    buttonControll = buttonControls.buttonControls
 
     # data to calc acceleration
     currentTime = 0
