@@ -80,6 +80,8 @@ def main():
 
         #Iterates through the testdata, when connected to cloud database
         while(car.next()):
+
+            #Checks if the car is in a state of emergency
             if emergency:
                 """
                 if emergencyButton.isPressed():
@@ -89,6 +91,8 @@ def main():
                 """
                 pass
 
+            #Every 300 line of testdate, check if the car has accelerated more the halv the current speed
+            #if so, put it in a state of emergency(a crash might have happened)
             if car.tripCounter%300 == 0: #This is just under 2 seconds time
                 prevTime = currentTime
                 currentTime = car.timestamp[0]
@@ -103,6 +107,7 @@ def main():
                 except ZeroDivisionError:
                     pass
 
+            #every 50 line of testdata, check if the car is close to a slippery road
             if(car.tripCounter % 50 == 0):
                 carSpeed = car.speed[0]
                 if(carSpeed > 5):
