@@ -6,6 +6,9 @@ modem. After this, the modem will be unlocked, the modem will check if there is 
 
 This cleans up the sending sms code alot. It encurrages to using the GSMHandler as a object with states, that need to be set, before use
 instead of setting and checking for valid state everytime the GSMHandler object is to be used.
+
+pip install python-gsmmodem
+pip install pyserial
 '''
 
 import sys, logging
