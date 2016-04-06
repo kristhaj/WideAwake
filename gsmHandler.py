@@ -37,7 +37,7 @@ class GSMHandler(object):
         '''
         try:
             print("GSMHANDLER Start")
-            #self.port = self._getPort() # find the port where the modem is connected.
+            self.port = self._getPort() # find the port where the modem is connected.
             print(1)
             self.baud = 115200 # modem baud rate
             print(2)
@@ -66,14 +66,21 @@ class GSMHandler(object):
         :return: portID
         '''
         print("grepStart")
-        port = grep("Identifying")
+        posPorts = sorted(grep(""))
         print("grepEnd")
+        for n, (port, desc, hwid) in enumerate(posPorts, 1):
+            print("{:20}\n".format(port))
+
+            print("    desc: {}\n".format(desc))
+            print("    hwid: {}\n".format(hwid))
+        """
         if len(port) != 1:
             if len(port) == 0:
                 raise UnusableSystemException("Could not find the GSM doogle")
             if len(port)>1:
                 raise UnusableSystemException("Found more then 1 GSM doogle")
-        print(port)
+            """
+        print("endGetPort")
         return port
 
 

@@ -1,36 +1,46 @@
 import jsonParser
 
-class Car:
-	'''
-	This class is meant to simulate a car as it is driving, by changing it's attributes/variables as it reads through a
-	json object of testdata using its tripcounter.
-	'''
-	def __init__(self, tripPath = None, wantedAtt = None):
-		'''
-		Initialises with the default jsonParser values as the trip.
-		:param tripPath: Uses jsonParsers default path to json object if not given.
-		:param wantedAtt: Uses jsonParsers default trip attributes if not given.
-		:return:
-		'''
-		self.long = (0,0)
-		self.lat = (0,0)
-		self.speed = (0,0)
-		self.tripCounter = 0
-		self.ABS = False
-		if(tripPath == None and wantedAtt == None):
-			self.json = jsonParser.JsonParser()
-			self.trip = self.json.getResources(self.json.getPath())
-		else:
-			self.json.setPath(tripPath)
-			self.json.setWantedAttributes(wantedAtt)
-			self.trip = self.json.getResources()
 
-	def getTrip(self):
-		'''
-		Returns a list of dicts containing a attribute given by name, value and timestamp.
-		:return: List of ditcs.
-		'''
-		return self.trip
+class Car:
+    '''
+    This class is meant to simulate a car as it is driving, by changing it's attributes/variables as it reads through a
+    json object of testdata using its tripcounter.
+    '''
+
+    def __init__(self, tripPath=None, wantedAtt=None):
+        '''
+        Initialises with the default jsonParser values as the trip.
+        :param tripPath: Uses jsonParsers default path to json object if not given.
+        :param wantedAtt: Uses jsonParsers default trip attributes if not given.
+        :return:
+        '''
+        self.long = (0, 0)
+        self.lat = (0, 0)
+        self.speed = (0, 0)
+        self.timestamp = (0, 0)
+		self.ABS = False
+        self.tripCounter = 0
+        if (tripPath == None and wantedAtt == None):
+            self.json = jsonParser.JsonParser()
+            self.trip = self.json.getResources(self.json.getPath())
+        else:
+            self.json.setPath(tripPath)
+            self.json.setWantedAttributes(wantedAtt)
+            self.trip = self.json.getResources()
+
+    def getTrip(self):
+        '''
+        Returns a list of dicts containing a attribute given by name, value and timestamp.
+        :return: List of ditcs.
+        '''
+        return self.trip
+
+    def getJson(self):
+        '''
+        The jsonParser connected to the car's trip
+        :return: jsonParser
+        '''
+        return self.json
 
 	def setTrip(self, path, wantedAtt):
 		'''
@@ -46,16 +56,11 @@ class Car:
 		self.lat = (0,0)
 		self.speed = (0,0)
 		self.ABS = False
+		self.timestamp = (0,0)
 		self.json.setPath(path)
 		self.json.setWantedAttributes(wantedAtt)
 		self.trip = self.json.getResources(path)
 
-	def getJson(self):
-		'''
-		The jsonParser connected to the car's trip
-		:return: jsonParser
-		'''
-		return self.json
 
 	def next(self):
 		'''
@@ -65,6 +70,8 @@ class Car:
 		'''
 		tempName = self.trip[self.tripCounter]['name']
 		tempVal = self.trip[self.tripCounter]['value']
+		tempTime = self.trip[self.tripCounter]['timestamp']
+		self.timestamp = (self.timestamp[1], tempTime)
 		if 'ABS' == tempName:
 			self.ABS = True
 		else:
@@ -78,5 +85,5 @@ class Car:
 		elif tempName == "end_of_script":
 			return False
 
-		self.tripCounter += 1
-		return True
+        self.tripCounter += 1
+        return True
