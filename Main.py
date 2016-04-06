@@ -1,3 +1,4 @@
+# coding=utf-8
 #from Interface import LEDcontrols
 from dbConnection import DBConnection
 from sqlLiteHandler import SQLLite
