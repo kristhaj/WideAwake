@@ -62,7 +62,7 @@ class GSMHandler(object):
     def _getPort(self):
         '''
         Not done: Finds the port connecting the gsm doogle to the pi using a ID and grep().
-        Needs to find which value in the tuple grep() returns we need(is the port).
+        Need to find which value in the tuple grep() returns we need(is the port).
         :return: portID
         '''
         print("grepStart")
