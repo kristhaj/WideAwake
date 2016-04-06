@@ -23,12 +23,11 @@ class buttonControls:
         if GPIO.input(self.distressButton):
             self.distressState = False
 
-    def setMode(self):
-        if self.onlineState:
-            self.ledcontrols.safe(True)
-        else:
-            self.ledcontrols.safe(False)
+    def getMode(self):
+        self.getButtonState()
+        return self.onlineState
 
 
     def distressSignal(self):
+        self.getButtonState()
         return self.distressState

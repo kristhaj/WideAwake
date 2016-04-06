@@ -82,7 +82,7 @@ def main():
         while(car.next()):
             if emergency:
                 """
-                if emergencyButton.isPressed():
+                if not buttonControll.distressState:
                     emergency = False
                 else if emergencyTime = car.timestamp[0] + 30:
                     gsmHandler.sendThatShit("Collision at longditude: ", car.long[0],", latitude: ", car.lat[0], ".")
@@ -110,13 +110,13 @@ def main():
                     gpsState = handler.compareCoordinates(car.lat[0], car.long[0])
                     if (gpsState[0] == 'A'):
                         print("DANGER")
-         #               ledKontroll.dangerMode(True)
+         #               ledKontroll.dangerMode(buttonControll.getMode)
                     elif(gpsState[0] == 'C'):
                         print("Warning")
           #              ledKontroll.warningMode()
                     elif(gpsState[0] == 'N'):
                         print("Carry on")
-           #             ledKontroll.safe(True)
+           #             ledKontroll.safe(buttonControll.getMode)
 
 
     except:
@@ -135,10 +135,11 @@ def main():
         #iterates through testdata, when connected to local database
         while(offlineCar.next()):
             if emergency:
-                """
-                if emergencyButton.isPressed():
+
+                """"
+                if not buttonControll.distressState:
                     emergency = False
-                else if emergencyTime = car.timestamp[0] + 30:
+                elif emergencyTime = car.timestamp[0] + 30:
                     gsmHandler.sendThatShit("Collision at longditude: ", car.long[0],", latitude: ", car.lat[0], ".")
                 """
                 pass
@@ -164,13 +165,13 @@ def main():
                     gpsState = offlineHandler.offlineCompareCoordinates(offlineCar.lat[0], offlineCar.long[0])
                     if (gpsState[0] == 'A'):
                         print("DANGER")
-         #               ledKontroll.dangerMode(True)
+         #               ledKontroll.dangerMode(False)
                     elif(gpsState[0] == 'C'):
                         print("Warning")
           #              ledKontroll.warningMode()
                     elif(gpsState[0] == 'N'):
                         print("Carry on")
-           #             ledKontroll.safe(True)
+           #             ledKontroll.safe(False)
 
 
 
