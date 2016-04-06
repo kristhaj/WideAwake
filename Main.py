@@ -22,6 +22,7 @@ def main():
     #set global variables gshHandler and connection. This will be tried to initialized, if successfull wideawake is online, else offline-mode.
     gsmHandler = None
     connection = None
+    offlineConnection = None
 
 
     #Create a controller/object to controll the interface. Uncomment this when LED interface is connected
@@ -29,7 +30,7 @@ def main():
     #ledKontroll.setUpLeds(ledKontroll.leds)
     try:
         try:
-            gsmHandler = GSMHandler()
+            #gsmHandler = GSMHandler()
             #connect to database
             connection = DBConnection()
             connection.connectToDB()
@@ -47,14 +48,14 @@ def main():
 
 
         #Uploads latest verson of database (retrived data) to the local database
+
         localdbConnection = SQLLite("Resources/WideAwakeCoordinates.db")
         localdbConnection.establishConnection()
-        RefreshCacheLocal(connection, localdbConnection).run()
+        RefreshCacheLocal(connection, localdbConnection).start()
 
         #Initialize a GPSHandler, and set the connection to the external/cloud database, GPShandler also calculates the distance between car and slippery spot.
         handler = GPSHandler()
         handler.setConnection(connection)
-
         #Creates a testobject with the testdata
         car = Car()
 

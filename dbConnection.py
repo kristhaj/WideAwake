@@ -156,7 +156,7 @@ class DBConnection:
             print () #print a space between each tuple
             print("Latitude: " + str(latitude))
             print("Longitude: " + str(longitude))
-            print("Timetamp " + str(timestamp))
+            print("Timestamp: " + str(timestamp))
 
 
 def main():
