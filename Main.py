@@ -23,7 +23,7 @@ def main():
     #set global variables gshHandler and connection. This will be tried to initialized, if successfull wideawake is online, else offline-mode.
     gsmHandler = None
     connection = None
-
+    offlineConnection = None
 
     #Create a controller/object to controll the interface. Uncomment this when LED interface is connected
     #ledKontroll = LEDcontrols.LEDcontrols()
@@ -185,7 +185,5 @@ def main():
         #closes the offlineConnetion to the local database
         if(not offlineConnection == None):
             offlineConnection.closeConnection()
-
-
 
 main()
