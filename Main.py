@@ -162,7 +162,7 @@ def main():
                 except ZeroDivisionError:
                     pass
 
-            if(offlineCar.tripCounter % 50 == 0 and False):
+            if(offlineCar.tripCounter % 50 == 0):
                 carSpeed = offlineCar.speed[0]
                 if(carSpeed > 5):
                     #Detect if there is's a dangerous road condition ahead.
