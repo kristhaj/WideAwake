@@ -81,6 +81,7 @@ class GSMHandler(object):
                 raise UnusableSystemException("Found more then 1 GSM doogle")
             """
         print("endGetPort")
+        port = None
         return port
 
 
