@@ -6,10 +6,10 @@ class buttonControls:
 
     ledcontrols = LEDcontrols.LEDcontrols
 
-    offlineButton = 0
+    offlineButton = 18
     onlineState = True
 
-    distressButton = 1
+    distressButton = 14
     distressState = True
 
     def __init__(self):
