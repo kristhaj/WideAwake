@@ -32,15 +32,29 @@ class GSMHandler(object):
         If something goes wrong, exceptions is printed, and variable/object is set to False.
         :return: None
         '''
-        self.port = self.getPort() # find the port where the modem is connected.
-        self.baud = 115200 # modem baud rate
-        self.pin = 1235 # sim-pin
-        self.deliver = False # if we want to wait for a deliveryReport
-        self.destination = "0047"
-        self.modem = self.connectToModem() # connect to the modem at the given port.
-        self.unlocked = self._unlockModem() # unlocks the modem with the given sim-pin
-        self.networkCoverage = self.networkCoverage()
-        self.sms = None
+        try:
+            print("GSMHANDLER Start")
+            #self.port = self._getPort() # find the port where the modem is connected.
+            print(1)
+            self.baud = 115200 # modem baud rate
+            print(2)
+            self.pin = 1235 # sim-pin
+            print(3)
+            self.deliver = False # if we want to wait for a deliveryReport
+            print(4)
+            self.destination = "004790909909"
+            print(5)
+            self.modem = self._connectToModem() # connect to the modem at the given port.
+            print(6)
+            self.unlocked = self._unlockModem() # unlocks the modem with the given sim-pin
+            print(7)
+            self.networkCoverage = self.networkCoverage()
+            print(8)
+            self.sms = None
+            print("GSMHANDLER End")
+        except Exception as e:
+            #print(str(e))
+            raise e
 
     def _getPort(self):
         '''
@@ -48,12 +62,15 @@ class GSMHandler(object):
         Needs to find which value in the tuple grep() returns we need(is the port).
         :return: portID
         '''
+        print("grepStart")
         port = grep("Identifying")
+        print("grepEnd")
         if len(port) != 1:
             if len(port) == 0:
                 raise UnusableSystemException("Could not find the GSM doogle")
             if len(port)>1:
                 raise UnusableSystemException("Found more then 1 GSM doogle")
+        print(port)
         return port
 
 
@@ -84,14 +101,11 @@ class GSMHandler(object):
             self.modem.connect(self.pin)
             return True
         except PinRequiredError as perr:
-            print("PinReqiredError: " + str(perr))
-            return False
+            raise UnusableSystemException("PinReqiredError: " + str(perr))
         except IncorrectPinError as ierr:
-            print("IncorrectPinError: " + str(ierr))
-            return False
+            raise UnusableSystemException("IncorrectPinError: " + str(ierr))
         except Exception as e:
-            print("Something went wrong when trying to unlock the modem" + str(e))
-            return False
+            raise UnusableSystemException("Something went wrong when trying to unlock the modem" + str(e))
 
 
     def networkCoverage(self):
@@ -140,7 +154,7 @@ class GSMHandler(object):
             return False
 
         try:
-            if(self._networkCoverage() == False):
+            if(self.networkCoverage() == False):
                 print("Network signal strength is not sufficient.")
                 return False
 

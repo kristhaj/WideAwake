@@ -2,7 +2,9 @@
 from dbConnection import DBConnection
 from sqlLiteHandler import SQLLite
 from gpsHandler import GPSHandler
+from gsmHandler import GSMHandler
 from car import Car
+import UnusableSystemException
 from offlineMode import OfflineMode
 from jsonParser import JsonParser
 import sqlite3
@@ -13,15 +15,33 @@ import sys
 
 
 def main():
-    try:
-        #Kobler til database
-        connection = DBConnection()
-        connection.connectToDB()
+    gsmHandler = None
+    connection = None
 
-        #Oppretter et ledkontroll objekt, Un comment this when LED interface is connected.
-        #ledKontroll = LEDcontrols.LEDcontrols()
-        #ledKontroll.setUpLeds(ledKontroll.leds)
-        #ledKontroll.safe(True)
+    #Oppretter et ledkontroll objekt, Un comment this when LED interface is connected.
+    #ledKontroll = LEDcontrols.LEDcontrols()
+    #ledKontroll.setUpLeds(ledKontroll.leds)
+    try:
+        try:
+            gsmHandler = GSMHandler()
+            #Kobler til database
+            connection = DBConnection()
+            connection.connectToDB()
+            #ledKontroll.safe(True)
+        except UnusableSystemException as e:
+            print(str(e))
+            #Since this exception occured, it means that there is something wrong with the gsmHandler. It could not
+            #connect to the gsm module, or the connection did not connect correctly. Notify user that in offline mode.
+            #ledKontroll.safe(False)
+            raise e # rais this to exit the try online, and go to expect offline
+        except Exception as e:
+            print(str(e))
+            #ledKontroll.safe(False)
+            raise e # rais this to exit the try online, and go to expect offline
+
+
+
+
 
 
         #Henter data fra database slik at den kan lagres på lokal database(SQLite)
@@ -96,8 +116,12 @@ def main():
         #Lukker kobling til sqlite-databasen
         offlineConnection.closeConnection()
 
-    # Lukker kobling til mysql-database
-    connection.closeConnection()
+    finally:
+        # Lukker kobling til mysql-database
+        if(not connection == None):
+            connection.closeConnection()
+        if(not gsmHandler == None):
+            gsmHandler.closeModem()
 
 
 
