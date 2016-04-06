@@ -16,6 +16,7 @@ class Car:
 		self.lat = (0,0)
 		self.speed = (0,0)
 		self.tripCounter = 0
+		self.ABS = False
 		if(tripPath == None and wantedAtt == None):
 			self.json = jsonParser.JsonParser()
 			self.trip = self.json.getResources(self.json.getPath())
@@ -44,6 +45,7 @@ class Car:
 		self.long = (0,0)
 		self.lat = (0,0)
 		self.speed = (0,0)
+		self.ABS = False
 		self.json.setPath(path)
 		self.json.setWantedAttributes(wantedAtt)
 		self.trip = self.json.getResources(path)
@@ -63,13 +65,17 @@ class Car:
 		'''
 		tempName = self.trip[self.tripCounter]['name']
 		tempVal = self.trip[self.tripCounter]['value']
+		if 'ABS' == tempName:
+			self.ABS = True
+		else:
+			self.ABS = False
 		if "vehicle_speed" == tempName:
 			self.speed = (self.speed[1],tempVal)
 		elif "longitude" == tempName:
 			self.long = (self.long[1],tempVal)
 		elif "latitude" == tempName:
 			self.lat = (self.lat[1],tempVal)
-		elif tempVal == "end_of_script":
+		elif tempName == "end_of_script":
 			return False
 
 		self.tripCounter += 1

@@ -1,5 +1,6 @@
 import json
 from pprint import pprint
+from random import randint
 
 class JsonParser:
 	'''
@@ -7,7 +8,7 @@ class JsonParser:
 	files are on over 1 million lines, this parser should only be used as a setup since it takes time to traverse a
 	whole file.
 	'''
-	
+
 	def __init__(self):
 		'''
 		Sets the default jsonfile as downtown-crosstown.json and wantedAttributes.
@@ -30,7 +31,8 @@ class JsonParser:
 			'button_state': False,
 			'headlamp_status': False,
 			'windshield_wiper_status': False,
-			'ignition_status': False
+			'ignition_status': False,
+			'ABS': True
 		}
 		self.pathName = "Resources/downtown-crosstown.json"
 
@@ -108,8 +110,12 @@ class JsonParser:
 		with open(pathname) as f:
 			for line in f:
 				if not(self.isAttributeWanted(line)):
+					randNumb = random.randint(1, 100)
+					if randNumb == 1:
+						temp = json.loads(line)['timestamp']
+						jfile.append({'timestamp': temp, 'name': 'ABS', 'value': True})
 					continue
 				temp = json.loads(line)
 				jfile.append(temp)
-		jfile.append({'end_of_script':True, 'name':'end_of_script','value':'end_of_script'})
+		jfile.append({'timestamp': 5000, 'name':'end_of_script','value':'end_of_script'})
 		return jfile

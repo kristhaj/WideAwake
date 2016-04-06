@@ -67,6 +67,8 @@ def main():
         #Creates a testobject with the testdata
         car = Car()
 
+
+
         #Iterates through the testdata, when connected to cloud database
         while(car.next()):
             if(car.tripCounter % 50 == 0):
