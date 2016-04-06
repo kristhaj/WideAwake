@@ -15,14 +15,15 @@ class LEDcontrols:
     def __init__(self):
         self.setUpLeds([17, 22, 27])
 
-    def safe(self, connection):
+    def safe(self, connection): #Set interface to a safe-mode. Connection is a boolean indicating whether the system is in an offline or online state
+
         self.dangerMode(False)
-        if (connection):
+        if (connection): #I.E. online -> green light on 
             self.greenOn()
             self.yellowOff()
             self.redOff()
 
-        else:
+        else: #I.E. offline -> yellow light on
             self.yellowOn()
             self.greenOff()
             self.redOff()

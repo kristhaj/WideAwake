@@ -15,10 +15,16 @@ import sys
 
 
 def main():
+    '''
+    WideAwake main process.
+    '''
+
+    #set global variables gshHandler and connection. This will be tried to initialized, if successfull wideawake is online, else offline-mode.
     gsmHandler = None
     connection = None
 
-    #Oppretter et ledkontroll objekt, Un comment this when LED interface is connected.
+
+    #Create a controller/object to controll the interface. Uncomment this when LED interface is connected
     #ledKontroll = LEDcontrols.LEDcontrols()
     #ledKontroll.setUpLeds(ledKontroll.leds)
 
@@ -33,7 +39,7 @@ def main():
     try:
         try:
             gsmHandler = GSMHandler()
-            #Kobler til database
+            #connect to database
             connection = DBConnection()
             connection.connectToDB()
             #ledKontroll.safe(True)
@@ -53,25 +59,23 @@ def main():
 
 
 
-        #Henter data fra database slik at den kan lagres på lokal database(SQLite)
+        #Retrives data from database so that the data can be saved to local database(SQLite)
         cache = connection.getResultSet("SELECT Latitude,Longitude FROM Coordinates")
 
-        #Laster opp nyeste versjon av database til lokal "database"
+        #Uploads latest verson of database (retrived data) to the local database
         localdbConnection = SQLLite("Resources/WideAwakeCoordinates.db")
         localdbConnection.establishConnection()
         #localdbConnection.updateLocalDatabase(cache)
         localdbConnection.closeConnection()
 
-        #Oppretter et GPSHandler objekt som finner avstand fra bil til farlig veistrekke
+        #Initialize a GPSHandler, and set the connection to the external/cloud database, GPShandler also calculates the distance between car and slippery spot.
         handler = GPSHandler()
         handler.setConnection(connection)
 
-        #Objekt med testdata
+        #Creates a testobject with the testdata
         car = Car()
 
-
-
-        #Går gjennom testdata når koblet til database
+        #Iterates through the testdata, when connected to cloud database
         while(car.next()):
             if emergency:
                 """
@@ -99,7 +103,7 @@ def main():
             if(car.tripCounter % 50 == 0):
                 carSpeed = car.speed[0]
                 if(carSpeed > 5):
-                    #Finner om det er innkommende farlig veistrekke
+                    #Detect if there is dangerous road condition ahead
                     gpsState = handler.compareCoordinates(car.lat[0], car.long[0])
                     if (gpsState[0] == 'A'):
                         print("DANGER")
@@ -114,18 +118,18 @@ def main():
 
     except:
         print("Kunne ikke koble til database")
-        #Oppretter testobjekt
+        #Creates a testobject with thestData
         offlineCar = Car()
 
-        #Kobler til lokal database
+        #Connects to local dataabase
         offlineConnection = SQLLite("Resources/WideAwakeCoordinates.db")
         offlineConnection.establishConnection()
 
-        #Oppretter et GPSHandler objekt som finner avstand fra bil til farlig veistrekke
+        #Initialize a offline GPShandler, that connects to the local database, and calculates distance between car and slippery spot.
         offlineHandler = GPSHandler()
         offlineHandler.setConnection(offlineConnection)
 
-        #Går gjennom testdata når koblet til lokal database
+        #iterates through testdata, when connected to local database
         while(offlineCar.next()):
             if emergency:
                 """
@@ -153,7 +157,7 @@ def main():
             if(offlineCar.tripCounter % 50 == 0 and False):
                 carSpeed = offlineCar.speed[0]
                 if(carSpeed > 5):
-                    #Finner om det er innkommende farlig veistrekke
+                    #Detect if there is's a dangerous road condition ahead.
                     gpsState = offlineHandler.offlineCompareCoordinates(offlineCar.lat[0], offlineCar.long[0])
                     if (gpsState[0] == 'A'):
                         print("DANGER")
@@ -167,15 +171,17 @@ def main():
 
 
 
-        #Lukker kobling til sqlite-databasen
-        offlineConnection.closeConnection()
 
     finally:
-        # Lukker kobling til mysql-database
+        #closes connection to cloud-database
         if(not connection == None):
             connection.closeConnection()
+        #closes the gsmHandler
         if(not gsmHandler == None):
             gsmHandler.closeModem()
+        #closes the offlineConnetion to the local database
+        if(not offlineConnection == None):
+            offlineConnection.closeConnection()
 
 
 
