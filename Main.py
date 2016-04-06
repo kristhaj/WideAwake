@@ -42,6 +42,9 @@ def main():
 
         #Går gjennom testdata når koblet til database
         while(car.next()):
+            if car.tripCounter%300 == 0: #This is just under 2 seconds time
+                
+                pass
             if(car.tripCounter % 50 == 0):
                 carSpeed = car.speed[0]
                 if(carSpeed > 5):
