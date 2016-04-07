@@ -11,6 +11,7 @@ from jsonParser import JsonParser
 import sqlite3
 import time
 import sys
+import datetime
 
 
 
@@ -20,6 +21,10 @@ def main():
     WideAwake main process.
     '''
 
+    #Variables to testuser to Database
+    testuserID = 69
+    testcarID = 80085
+    testWeather = "DET REGNER :( "
     #set global variables gshHandler and connection. This will be tried to initialized, if successfull wideawake is online, else offline-mode.
     gsmHandler = None
     connection = None
@@ -80,6 +85,20 @@ def main():
 
         #Iterates through the testdata, when connected to cloud database
         while(car.next()):
+            if (car.ABS):
+                try:
+                    #Should eventually change query to something else
+                    query = ("SELECT rID FROM REPORT ORDER BY DESC LIMIT 1")
+                    cursor = connection.cursor()
+                    cursor.execute(query)
+                    newID = cursor + 1
+                    #inserts a testuserID, testcarID, weather_condition, coordinates as a timestamp and the current date and time. This is a temporary query and may be subject to change
+                    queryToDB = ("INSERT INTO REPORT (rID, uID, cID, weather_condition, coordinate, report_time) VALUES (" newID ", " testuserID","testcarID"," testWeather",  (" car.lat "," car.long", NOW()) ," datetime.datetime.now()" )")
+                    cursor.execute(queryToDB)
+                    cursor.close()
+                except Exception as e:
+                    print(str(e))
+                    raise e
             if emergency:
                 """
                 if emergencyButton.isPressed():
