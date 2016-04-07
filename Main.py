@@ -93,7 +93,9 @@ def main():
                     cursor.execute(query)
                     newID = cursor + 1
                     #inserts a testuserID, testcarID, weather_condition, coordinates as a timestamp and the current date and time. This is a temporary query and may be subject to change
-                    queryToDB = ("INSERT INTO REPORT (rID, uID, cID, weather_condition, coordinate, report_time) VALUES (" newID ", " testuserID","testcarID"," testWeather",  (" car.lat "," car.long", NOW()) ," datetime.datetime.now()" )")
+                    queryToDB = ("INSERT INTO REPORT (rID, uID, cID, weather_condition, coordinate, report_time) VALUES ( + n\
+                    %d ,  %d,%d, %s, " (""+ car.lat +"," + car.long + ", NOW()) ,"+ datetime.datetime.now()+ ")"
+                    (newID, testuserID, testcarID,testWeather, ,  )
                     cursor.execute(queryToDB)
                     cursor.close()
                 except Exception as e:
