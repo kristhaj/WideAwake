@@ -46,7 +46,7 @@ class GSMHandler(object):
             print(4)
             self.destination = "004790909909"
             print(5)
-            self._connectToModem() # connect to the modem at the given port.
+            self.connected = self._connectToModem() # connect to the modem at the given port.
             print(6)
             self.unlocked = self._unlockModem() # unlocks the modem with the given sim-pin
             print(7)
@@ -153,11 +153,11 @@ class GSMHandler(object):
         :return:
         '''
         #Check if connections and stuff is ready to send SMS.
-        if(self.port == False or self.modem == False or self.unlocked == False):
+        if(self.port == False or self.connected == False or self.unlocked == False):
             print("Something is wrong with : ")
             if(self.port == False):
                 print("port, ")
-            if(self.modem == False):
+            if(self.connected == False):
                 print("modem, ")
             if(self.unlocked == False):
                 print("unlocked")
