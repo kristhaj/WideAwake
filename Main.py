@@ -1,3 +1,4 @@
+# coding=utf-8
 #from Interface import LEDcontrols
 from dbConnection import DBConnection
 from sqlLiteHandler import SQLLite
@@ -10,9 +11,10 @@ from jsonParser import JsonParser
 import sqlite3
 import time
 import sys
+
 from Interface import buttonControls
 
-
+from RefreshLocalCache import RefreshCacheLocal
 
 def main():
     '''
@@ -22,6 +24,7 @@ def main():
     #set global variables gshHandler and connection. This will be tried to initialized, if successfull wideawake is online, else offline-mode.
     gsmHandler = None
     connection = None
+    offlineConnection = None
 
 
     #Create a controller/object to controll the interface. Uncomment this when LED interface is connected
@@ -41,7 +44,7 @@ def main():
 
     try:
         try:
-            gsmHandler = GSMHandler()
+            #gsmHandler = GSMHandler()
             #connect to database
             connection = DBConnection()
             connection.connectToDB()
@@ -58,28 +61,24 @@ def main():
             raise e # rais this to exit the try online, and go to expect offline
 
 
-
-
-
-
-        #Retrives data from database so that the data can be saved to local database(SQLite)
-        cache = connection.getResultSet("SELECT Latitude,Longitude FROM Coordinates")
-
         #Uploads latest verson of database (retrived data) to the local database
+
         localdbConnection = SQLLite("Resources/WideAwakeCoordinates.db")
         localdbConnection.establishConnection()
-        #localdbConnection.updateLocalDatabase(cache)
-        localdbConnection.closeConnection()
+        RefreshCacheLocal(connection, localdbConnection).start()
 
         #Initialize a GPSHandler, and set the connection to the external/cloud database, GPShandler also calculates the distance between car and slippery spot.
         handler = GPSHandler()
         handler.setConnection(connection)
-
         #Creates a testobject with the testdata
         car = Car()
 
+
+
         #Iterates through the testdata, when connected to cloud database
         while(car.next()):
+
+            #Checks if the car is in a state of emergency
             if emergency:
                 """
                 if not buttonControll.distressState:
@@ -89,6 +88,8 @@ def main():
                 """
                 pass
 
+            #Every 300 line of testdate, check if the car has accelerated more the halv the current speed
+            #if so, put it in a state of emergency(a crash might have happened)
             if car.tripCounter%300 == 0: #This is just under 2 seconds time
                 prevTime = currentTime
                 currentTime = car.timestamp[0]
@@ -103,6 +104,7 @@ def main():
                 except ZeroDivisionError:
                     pass
 
+            #every 50 line of testdata, check if the car is close to a slippery road
             if(car.tripCounter % 50 == 0):
                 carSpeed = car.speed[0]
                 if(carSpeed > 5):
@@ -158,7 +160,7 @@ def main():
                 except ZeroDivisionError:
                     pass
 
-            if(offlineCar.tripCounter % 50 == 0 and False):
+            if(offlineCar.tripCounter % 50 == 0):
                 carSpeed = offlineCar.speed[0]
                 if(carSpeed > 5):
                     #Detect if there is's a dangerous road condition ahead.
@@ -186,7 +188,5 @@ def main():
         #closes the offlineConnetion to the local database
         if(not offlineConnection == None):
             offlineConnection.closeConnection()
-
-
 
 main()

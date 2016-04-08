@@ -46,7 +46,7 @@ class GPSHandler:
         try:
             lat = self.getBetween(carLat)
             long = self.getBetween(carLong)
-            query = ("SELECT Latitude, Longitude FROM Coordinates WHERE ("+str(carLat)+" BETWEEN "+str(lat[0])+" AND "+str(lat[1])+") AND ("+str(carLong)+" BETWEEN "+str(long[0])+" AND "+str(long[1])+")")
+            query = ("SELECT Latitude, Longitude, Timestamp FROM Coordinates WHERE ("+str(carLat)+" BETWEEN "+str(lat[0])+" AND "+str(lat[1])+") AND ("+str(carLong)+" BETWEEN "+str(long[0])+" AND "+str(long[1])+")")
             resultSet = self.connection.getResultSet(query)
             return self.validateCoordinates(carLat,carLong,resultSet,None)
         except Exception as e:
@@ -69,8 +69,9 @@ class GPSHandler:
         try:
             lat = self.getBetween(carLat)
             long = self.getBetween(carLong)
-            query = ("SELECT Latitude, Longitude FROM WideAwakeTrip WHERE ("+str(carLat)+" BETWEEN "+str(lat[0])+" AND "+str(lat[1])+") AND ("+str(carLong)+" BETWEEN "+str(long[0])+" AND "+str(long[1])+")")
+            query = ("SELECT Latitude, Longitude, Timestamp FROM WideAwakeTrip WHERE ("+str(carLat)+" BETWEEN "+str(lat[0])+" AND "+str(lat[1])+") AND ("+str(carLong)+" BETWEEN "+str(long[0])+" AND "+str(long[1])+")")
             resultSet = self.connection.getResultSet(query)
+
             return self.validateCoordinates(carLat,carLong,resultSet,None)
         except Exception as e:
             return "compare: " +str(e)
@@ -89,7 +90,8 @@ class GPSHandler:
         '''
         carPos = (carLat, carLong)
         #check if car coordinates is close to the resultSet (slippery Coordinates)
-        for tup in resultSet:
+        for tup3 in resultSet:
+            tup = (tup3[0],tup3[1])
             distKM = vincenty(carPos, tup).km
             if(distKM < 1):
                 #calculates new distance to slippery path
