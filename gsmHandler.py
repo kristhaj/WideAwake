@@ -40,7 +40,9 @@ class GSMHandler(object):
             print(1)
             self.baud = 115200 # modem baud rate
             print(2)
-            self.pin = 1235 # sim-pin
+            self.pin = "" # sim-pin
+            print(type(self.pin))
+            print(self.pin)
             print(3)
             self.deliver = False # if we want to wait for a deliveryReport
             print(4)
@@ -108,7 +110,7 @@ class GSMHandler(object):
         :return: True if unlock successfull, False else.
         '''
         try:
-            self.modem.connect(self.pin)
+            self.modem.connect(b'')
             return True
         except PinRequiredError as perr:
             raise UnusableSystemException(("PinReqiredError: " + str(perr)))
