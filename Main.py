@@ -22,8 +22,8 @@ def main():
     '''
 
     #Variables to testuser to Database
-    testuserID = 69
-    testcarID = 80085
+    testuserID = "69"
+    testcarID = "80085"
     testWeather = "DET REGNER :( "
     #set global variables gshHandler and connection. This will be tried to initialized, if successfull wideawake is online, else offline-mode.
     gsmHandler = None
