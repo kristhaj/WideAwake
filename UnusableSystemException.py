@@ -6,7 +6,7 @@ class UnusableSystemException(Exception):
     that disables the user from using WideAwake in online mode, When this is raised. The
      Main program will notice the interface.
     '''
-    def __init__(self,value):
+    def __init__(self, value):
         '''
         takes is an explanation about what is wrong.
         :param value:
