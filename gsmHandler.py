@@ -40,7 +40,7 @@ class GSMHandler(object):
             print(1)
             self.baud = 115200 # modem baud rate
             print(2)
-            self.pin = 1235 # sim-pin
+            self.pin = None # sim-pin
             print(3)
             self.deliver = False # if we want to wait for a deliveryReport
             print(4)
