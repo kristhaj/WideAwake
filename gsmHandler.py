@@ -115,7 +115,7 @@ class GSMHandler(object):
         except IncorrectPinError as ierr:
             raise UnusableSystemException(("IncorrectPinError: " + str(ierr)))
         except Exception as e:
-            raise UnusableSystemException(("Something went wrong when trying to unlock the modem" + str(e)))
+            raise UnusableSystemException(("Something went wrong when trying to unlock the modem: " + str(e)))
 
 
     def networkCoverage(self):
