@@ -46,7 +46,7 @@ class GSMHandler(object):
             print(4)
             self.destination = "004790909909"
             print(5)
-            self.modem = self._connectToModem() # connect to the modem at the given port.
+            self._connectToModem() # connect to the modem at the given port.
             print(6)
             self.unlocked = self._unlockModem() # unlocks the modem with the given sim-pin
             print(7)
