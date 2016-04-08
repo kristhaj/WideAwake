@@ -13,11 +13,10 @@ pip install pyserial
 
 import sys, logging
 import gsmmodem
-import UnusableSystemException
+from UnusableSystemException import UnusableSystemException
 from serial.tools.list_ports import grep
 from gsmmodem.modem import GsmModem, SentSms
 from gsmmodem.exceptions import TimeoutException, PinRequiredError, IncorrectPinError
-import UnusableSystemException
 
 
 class GSMHandler(object):

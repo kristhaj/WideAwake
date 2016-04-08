@@ -5,7 +5,7 @@ from sqlLiteHandler import SQLLite
 from gpsHandler import GPSHandler
 from gsmHandler import GSMHandler
 from car import Car
-import UnusableSystemException
+from UnusableSystemException import UnusableSystemException
 from offlineMode import OfflineMode
 from jsonParser import JsonParser
 import sqlite3
