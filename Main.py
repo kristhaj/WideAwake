@@ -1,5 +1,5 @@
 # coding=utf-8
-#from Interface import LEDcontrols
+from LEDcontrols import LEDcontrols
 from dbConnection import DBConnection
 from sqlLiteHandler import SQLLite
 from gpsHandler import GPSHandler
@@ -12,7 +12,7 @@ import sqlite3
 import time
 import sys
 
-from Interface import buttonControls
+from buttonControls import buttonControls
 
 from RefreshLocalCache import RefreshCacheLocal
 
@@ -28,11 +28,11 @@ def main():
 
 
     #Create a controller/object to controll the interface. Uncomment this when LED interface is connected
-    #ledKontroll = LEDcontrols.LEDcontrols()
-    #ledKontroll.setUpLeds(ledKontroll.leds)
+    ledKontroll = LEDControls.LEDControls()
+    ledKontroll.setUpLeds(ledKontroll.leds)
 
     #create controller object to controll the buttons
-    buttonControll = buttonControls.buttonControls
+    buttonControll = ButtonControls.buttonControls
 
     # data to calc acceleration
     currentTime = 0
@@ -48,16 +48,16 @@ def main():
             #connect to database
             connection = DBConnection()
             connection.connectToDB()
-            #ledKontroll.safe(True)
+            ledKontroll.safe(True)
         except UnusableSystemException as e:
             print(str(e))
             #Since this exception occured, it means that there is something wrong with the gsmHandler. It could not
             #connect to the gsm module, or the connection did not connect correctly. Notify user that in offline mode.
-            #ledKontroll.safe(False)
+            ledKontroll.safe(False)
             raise e # rais this to exit the try online, and go to expect offline
         except Exception as e:
             print(str(e))
-            #ledKontroll.safe(False)
+            ledKontroll.safe(False)
             raise e # rais this to exit the try online, and go to expect offline
 
 
@@ -80,12 +80,12 @@ def main():
 
             #Checks if the car is in a state of emergency
             if emergency:
-                """
+                
                 if not buttonControll.distressState:
                     emergency = False
-                else if emergencyTime = car.timestamp[0] + 30:
+                elif emergencyTime == car.timestamp[0] + 30:
                     gsmHandler.sendThatShit("Collision at longditude: ", car.long[0],", latitude: ", car.lat[0], ".")
-                """
+                
                 pass
 
             #Every 300 line of testdate, check if the car has accelerated more the halv the current speed
@@ -112,13 +112,13 @@ def main():
                     gpsState = handler.compareCoordinates(car.lat[0], car.long[0])
                     if (gpsState[0] == 'A'):
                         print("DANGER")
-         #               ledKontroll.dangerMode(buttonControll.getMode)
+                        ledKontroll.dangerMode(buttonControll.getMode)
                     elif(gpsState[0] == 'C'):
                         print("Warning")
-          #              ledKontroll.warningMode()
+                        ledKontroll.warningMode()
                     elif(gpsState[0] == 'N'):
                         print("Carry on")
-           #             ledKontroll.safe(buttonControll.getMode)
+                        ledKontroll.safe(buttonControll.getMode)
 
 
     except:
@@ -138,12 +138,12 @@ def main():
         while(offlineCar.next()):
             if emergency:
 
-                """"
+                
                 if not buttonControll.distressState:
                     emergency = False
-                elif emergencyTime = car.timestamp[0] + 30:
+                elif emergencyTime == car.timestamp[0] + 30:
                     gsmHandler.sendThatShit("Collision at longditude: ", car.long[0],", latitude: ", car.lat[0], ".")
-                """
+                
                 pass
 
             if offlineCar.tripCounter % 300 == 0:  # This is just under 2 seconds time
@@ -167,13 +167,13 @@ def main():
                     gpsState = offlineHandler.offlineCompareCoordinates(offlineCar.lat[0], offlineCar.long[0])
                     if (gpsState[0] == 'A'):
                         print("DANGER")
-         #               ledKontroll.dangerMode(False)
+                        ledKontroll.dangerMode(False)
                     elif(gpsState[0] == 'C'):
                         print("Warning")
-          #              ledKontroll.warningMode()
+                        ledKontroll.warningMode()
                     elif(gpsState[0] == 'N'):
                         print("Carry on")
-           #             ledKontroll.safe(False)
+                        ledKontroll.safe(False)
 
 
 
