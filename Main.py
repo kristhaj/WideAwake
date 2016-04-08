@@ -87,17 +87,25 @@ def main():
         while(car.next()):
             if (car.ABS):
                 try:
+                    """Queries for the last report ID (This does not work, as the getResultSet is returning false, and not the resultSet with the values)
+                    , inccrements by 1, and makes a new reportQuery, using the coordinates, weather condition, userID and carID. Also adds the current timestamp"""
+                    localdbConnection = SQLLite("Resources/WideAwakeCoordinates.db")
+                    localdbConnection.establishConnection()
                     #Should eventually change query to something else
-                    query = ("SELECT rID FROM REPORT ORDER BY DESC LIMIT 1")
-                    cursor = connection.cursor()
-                    cursor.execute(query)
-                    newID = cursor + 1
+                    #getResultSet does not work
+                    query = ("SELECT max(rID) as rID FROM REPORT ")
+                    newID = localdbConnection.getResultSet(query)
+                    date = datetime.datetime.now()
+                    newID = '7'
+                    coordinates = car.lat + car.long
+                    coordinates = (''.join(elems) for elems in coordinates)
                     #inserts a testuserID, testcarID, weather_condition, coordinates as a timestamp and the current date and time. This is a temporary query and may be subject to change
                     queryToDB = "(INSERT INTO REPORT (rID, uID, cID, weather_condition, coordinate, report_time) VALUES ( + n\
-                    %d ,  %d,%d, %s, "(""+ str(car.lat) +"," + str(car.long) + ", NOW()) ,"+ str(datetime.datetime.now()))
-                    (newID, testuserID, testcarID,testWeather)
-                    cursor.execute(queryToDB)
-                    cursor.close()
+                    %s ,  %s, %s, %s, %s, %s )) "
+                    (newID, testuserID, testcarID , testWeather, coordinates , date.strftime( "%m/%d/%y/%H/%M/%S"))
+                    localdbConnection.executeInsertStatement(queryToDB)
+                    print("Complete query")
+                    localdbConnection.closeConnection()
                 except Exception as e:
                     print(str(e))
                     raise e
