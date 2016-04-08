@@ -37,7 +37,7 @@ class GSMHandler(object):
         '''
         try:
             print("GSMHANDLER Start")
-            self.port = self._getPort() # find the port where the modem is connected.
+            self.port = "/dev/ttyAMA0" # find the port where the modem is connected.
             print(1)
             self.baud = 115200 # modem baud rate
             print(2)
