@@ -40,9 +40,7 @@ class GSMHandler(object):
             print(1)
             self.baud = 115200 # modem baud rate
             print(2)
-            self.pin = "" # sim-pin
-            print(type(self.pin))
-            print(self.pin)
+            self.pin = None # sim-pin
             print(3)
             self.deliver = False # if we want to wait for a deliveryReport
             print(4)
@@ -62,6 +60,7 @@ class GSMHandler(object):
 
     def _getPort(self):
         '''
+        Not in use.
         Not done: Finds the port connecting the gsm doogle to the pi using a ID and grep().
         Need to find which value in the tuple grep() returns we need(is the port).
         :return: portID
@@ -71,7 +70,6 @@ class GSMHandler(object):
         print("grepEnd")
         for n, (port, desc, hwid) in enumerate(posPorts, 1):
             print("{:20}\n".format(port))
-
             print("    desc: {}\n".format(desc))
             print("    hwid: {}\n".format(hwid))
         """
