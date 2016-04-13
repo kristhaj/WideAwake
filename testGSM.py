@@ -2,7 +2,7 @@ from gsmmodem.modem import GsmModem
 
 
 def main():
-    modem = GsmModem()
+    modem = GsmModem("/dev/ttyAMA0")
     modem._unlockSim()
 
 main()
