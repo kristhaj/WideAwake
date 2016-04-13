@@ -1,7 +1,8 @@
-from gsmHandler import GSMHandler
+from gsmmodem.modem import GsmModem
+
 
 def main():
-    gsm = GSMHandler()
-    print(gsm.networkCoverage())
+    modem = GsmModem()
+    modem._unlockSim()
 
 main()
