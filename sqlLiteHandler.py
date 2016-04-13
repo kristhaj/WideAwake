@@ -54,7 +54,7 @@ class SQLLite:
         try:
             self.deleteLocalDatabase()
             for tup in resultSet:
-                self.executeInsertStatement(self.createInsertStatment(tup[0],tup[1]))
+                self.executeInsertStatement(self.createInsertStatment(tup[0],tup[1], tup[2]))
             return True
         except Exception as e:
             return "False:" + str(e)
@@ -120,14 +120,14 @@ class SQLLite:
         except:
             return False
 
-    def createInsertStatment(self,lat,long):
+    def createInsertStatment(self,lat,long, timestamp):
         '''
         Creates a insert statment with the given coordinates.
         :param lat: Car latitude to push to local database.
         :param long: Car longitude to push to local database
         :return: SQLlite insert-statment.
         '''
-        return "insert into WideAwakeTrip values ("+str(lat)+","+str(long)+")"
+        return "insert into WideAwakeTrip values ("+str(lat)+","+str(long)+", "+ str(timestamp) + ");"
 
 def main():
     #change path to coorect path of database on Pi.

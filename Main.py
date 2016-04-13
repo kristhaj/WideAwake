@@ -11,8 +11,12 @@ from jsonParser import JsonParser
 import sqlite3
 import time
 import sys
+<<<<<<< HEAD
 import datetime
 
+=======
+from RefreshLocalCache import RefreshCacheLocal
+>>>>>>> d092f7a54dd63c0e64e511e9e8ceed85b1a79993
 
 
 
@@ -30,6 +34,7 @@ def main():
     connection = None
     offlineConnection = None
 
+
     #Create a controller/object to controll the interface. Uncomment this when LED interface is connected
     #ledKontroll = LEDcontrols.LEDcontrols()
     #ledKontroll.setUpLeds(ledKontroll.leds)
@@ -44,7 +49,7 @@ def main():
 
     try:
         try:
-            gsmHandler = GSMHandler()
+            #gsmHandler = GSMHandler()
             #connect to database
             connection = DBConnection()
             connection.connectToDB()
@@ -61,23 +66,15 @@ def main():
             raise e # rais this to exit the try online, and go to expect offline
 
 
-
-
-
-
-        #Retrives data from database so that the data can be saved to local database(SQLite)
-        cache = connection.getResultSet("SELECT Latitude,Longitude FROM Coordinates")
-
         #Uploads latest verson of database (retrived data) to the local database
+
         localdbConnection = SQLLite("Resources/WideAwakeCoordinates.db")
         localdbConnection.establishConnection()
-        #localdbConnection.updateLocalDatabase(cache)
-        localdbConnection.closeConnection()
+        RefreshCacheLocal(connection, localdbConnection).start()
 
         #Initialize a GPSHandler, and set the connection to the external/cloud database, GPShandler also calculates the distance between car and slippery spot.
         handler = GPSHandler()
         handler.setConnection(connection)
-
         #Creates a testobject with the testdata
         car = Car()
 

@@ -9,6 +9,11 @@ class DBConnection:
     '''
     This class sets the database connection and handles all SQL statements and querys to the database.
     '''
+
+    # SQL-statment to execute on database (retrive tuples)
+    # coordinates = tabelName
+    query = ("SELECT Latitude, Longitude, Timestamp FROM Coordinates")
+
     def __init__(self):
         '''
         This sets all the class variables static and initializes
@@ -17,17 +22,13 @@ class DBConnection:
         self.cnx = None
         self.cursor = None
 
-        usr = dbConfig.getUsr()
-        pwd = dbConfig.getPwd()
-        host = dbConfig.getHost()
-        db = dbConfig.getDB()
-
         #Connection configurations
-        self.config = {'user': usr,
-                  'password': pwd,
-                  'host': host,
-                  'database': db,
-                  }
+        self.config = {
+            'user': dbConfig.getUsr(),
+            'password': dbConfig.getPwd(),
+            'host': dbConfig.getHost(),
+            'database': dbConfig.getDB()
+        }
 
     def getConnection(self):
         """
@@ -85,7 +86,7 @@ class DBConnection:
         :return: boolean
         """
         #create test query, coordinates = tabelName
-        add_testCoordinates = ("INSERT INTO Coordinates (Latitude, Longitude) VALUES ("+lat+", "+long+")")
+        add_testCoordinates = ("INSERT INTO Coordinates (Latitude, Longitude, Timestamp) VALUES ("+lat+", "+long+", NOW())")
         cursor = self.cnx.cursor()
         #Insert new tuple to database
         try:
@@ -100,11 +101,6 @@ class DBConnection:
             return False
 
         #make sure data is commited to database
-
-
-    #SQL-statment to execute on database (retrive tuples)
-    #coordinates = tabelName
-    query = ("SELECT Latitude, Longitude FROM Coordinates")
 
     def pullFromDB(self):
         """
@@ -144,8 +140,8 @@ class DBConnection:
         :return: List with tuples from database.
         '''
         result = []
-        for (latitude, longitude) in self.cursor:
-            result.append((latitude,longitude))
+        for (latitude, longitude, timestamp) in self.cursor:
+            result.append((latitude,longitude, timestamp))
 
         return result
 
@@ -156,10 +152,11 @@ class DBConnection:
 
         :return: None
         """
-        for (latitude, longitude) in self.cursor:
+        for (latitude, longitude, timestamp) in self.cursor:
             print () #print a space between each tuple
             print("Latitude: " + str(latitude))
             print("Longitude: " + str(longitude))
+            print("Timestamp: " + str(timestamp))
 
 
 def main():
