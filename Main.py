@@ -85,27 +85,18 @@ def main():
 
         #Iterates through the testdata, when connected to cloud database
         while(car.next()):
-            if (car.ABS):
+            if(car.ABS):
                 try:
-                    """Queries for the last report ID (This does not work, as the getResultSet is returning false, and not the resultSet with the values)
-                    , inccrements by 1, and makes a new reportQuery, using the coordinates, weather condition, userID and carID. Also adds the current timestamp"""
-                    localdbConnection = SQLLite("Resources/WideAwakeCoordinates.db")
-                    localdbConnection.establishConnection()
+                    """Takes the coordinates of the car and current timestamp and pushes it to the database """
                     #Should eventually change query to something else
-                    #getResultSet does not work
-                    query = ("SELECT max(rID) as rID FROM REPORT ")
-                    newID = localdbConnection.getResultSet(query)
                     date = datetime.datetime.now()
-                    newID = '7'
-                    coordinates = car.lat + car.long
-                    coordinates = (''.join(elems) for elems in coordinates)
+                    print(type(car.long[1]))
                     #inserts a testuserID, testcarID, weather_condition, coordinates as a timestamp and the current date and time. This is a temporary query and may be subject to change
-                    queryToDB = "(INSERT INTO REPORT (rID, uID, cID, weather_condition, coordinate, report_time) VALUES ( + n\
-                    %s ,  %s, %s, %s, %s, %s )) "
-                    (newID, testuserID, testcarID , testWeather, coordinates , date.strftime( "%m/%d/%y/%H/%M/%S"))
+                    queryToDB = "(INSERT INTO Coordinates(Latitude, longitude, timestamp) VALUES ( + n\
+                    %s, %s, %s )) "
+                    (car.lat[0] ,car.long[0] , date.strftime( "%m/%d/%y/%H/%M/%S"))
                     localdbConnection.executeInsertStatement(queryToDB)
                     print("Complete query")
-                    localdbConnection.closeConnection()
                 except Exception as e:
                     print(str(e))
                     raise e

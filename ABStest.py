@@ -5,9 +5,6 @@ import datetime
 
 
 def test():
-    testuserID = '69'
-    testcarID = '80085'
-    testWeather = "DET REGNER :( "
 
     #connection = DBConnection()
     #connection.connectToDB()
@@ -21,19 +18,12 @@ def test():
         if(car.ABS):
             try:
                 #Should eventually change query to something else
-                query = ("SELECT max(rID) as rID FROM REPORT ")
-                newID = localdbConnection.getResultSet(query)
-                print(newID)
                 date = datetime.datetime.now()
-                newID = '7'
-                coordinates = car.lat + car.long
-                coordinates = (''.join(elems) for elems in coordinates)
-                print (coordinates)
+                print(type(car.long[1]))
                 #inserts a testuserID, testcarID, weather_condition, coordinates as a timestamp and the current date and time. This is a temporary query and may be subject to change
-                queryToDB = "(INSERT INTO REPORT (rID, uID, cID, weather_condition, coordinate, report_time) VALUES ( + n\
-                %s ,  %s, %s, %s, %s, %s )) "
-                (newID, testuserID, testcarID , testWeather, coordinates , date.strftime( "%m/%d/%y/%H/%M/%S"))
-                print("Hello: " + queryToDB)
+                queryToDB = "(INSERT INTO Coordinates(Latitude, longitude, timestamp) VALUES ( + n\
+                %s, %s, %s )) "
+                (car.lat[0] ,car.long[0] , date.strftime( "%m/%d/%y/%H/%M/%S"))
                 localdbConnection.executeInsertStatement(queryToDB)
                 print("Complete query")
             except Exception as e:
