@@ -11,12 +11,9 @@ from jsonParser import JsonParser
 import sqlite3
 import time
 import sys
-<<<<<<< HEAD
 import datetime
 
-=======
 from RefreshLocalCache import RefreshCacheLocal
->>>>>>> d092f7a54dd63c0e64e511e9e8ceed85b1a79993
 
 
 
