@@ -11,6 +11,8 @@ from jsonParser import JsonParser
 import sqlite3
 import time
 import sys
+import datetime
+
 from RefreshLocalCache import RefreshCacheLocal
 
 
@@ -20,6 +22,10 @@ def main():
     WideAwake main process.
     '''
 
+    #Variables to testuser to Database
+    testuserID = "69"
+    testcarID = "80085"
+    testWeather = "DET REGNER :( "
     #set global variables gshHandler and connection. This will be tried to initialized, if successfull wideawake is online, else offline-mode.
     gsmHandler = None
     connection = None
@@ -73,6 +79,21 @@ def main():
 
         #Iterates through the testdata, when connected to cloud database
         while(car.next()):
+            if(car.ABS):
+                try:
+                    """Takes the coordinates of the car and current timestamp and pushes it to the database """
+                    #Should eventually change query to something else
+                    date = datetime.datetime.now()
+                    print(type(car.long[1]))
+                    #inserts a testuserID, testcarID, weather_condition, coordinates as a timestamp and the current date and time. This is a temporary query and may be subject to change
+                    queryToDB = "(INSERT INTO Coordinates(Latitude, longitude, timestamp) VALUES ( + n\
+                    %s, %s, %s )) "
+                    (car.lat[0] ,car.long[0] , date.strftime( "%m/%d/%y/%H/%M/%S"))
+                    localdbConnection.executeInsertStatement(queryToDB)
+                    print("Complete query")
+                except Exception as e:
+                    print(str(e))
+                    raise e
 
             #Checks if the car is in a state of emergency
             if emergency:
