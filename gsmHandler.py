@@ -23,7 +23,10 @@ class GSMHandler(object):
 
     '''
     def __init__(self):
-
+        '''
+        This "constructor" connects to the gsmModule, and sets up the configuration needed.
+        :return: nothing, raises exception if something went wrong.
+        '''
         try:
             self.modem = serial.Serial(port='/dev/ttyAMA0', baudrate=115200, timeout=3.0) #connet to the modme
             self.open = self.modem.isOpen() #get the state of the modem
@@ -38,12 +41,21 @@ class GSMHandler(object):
 
 
     def _setSMSValidation(self):
+        '''
+        This function is private, and sets the validations of how long a sms should be tryed sendt.
+        parameters are set so that the sms should not be tried sendt more than a few minutes.
+        :return: nothing
+        '''
         self.modem.write(b'AT+CSMP=17,0,0,16\r\n')
         print(self.modem.read(20))
 
 
 
     def closeModem(self):
+        '''
+        closes the connection to the modem.
+        :return: True if successfull, else, False
+        '''
         try:
             self.modem.close()
             return True
@@ -53,6 +65,11 @@ class GSMHandler(object):
 
 
     def sendThatShit(self, msg):
+        '''
+        This is the actual function that sends the distress signal.
+        :param msg: String containing the message to send.
+        :return: nothing
+        '''
         try:
             self.modem.write(b'AT+CMGS="+4790909909"\r\n')
             time.sleep(5)
