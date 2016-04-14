@@ -1,7 +1,8 @@
-from gsmHandler import GSMHandler
+from gsmmodem.modem import GsmModem
+
 
 def main():
-    gsm = GSMHandler()
-    print(gsm.networkCoverage())
+    modem = GsmModem("/dev/ttyAMA0")
+    modem.connect(None)
 
 main()

@@ -37,7 +37,6 @@ class GSMHandler(object):
             raise e
 
 
-
     def _setSMSValidation(self):
         self.modem.write(b'AT+CSMP=17,0,0,16\r\n')
         print(self.modem.read(20))
@@ -54,7 +53,6 @@ class GSMHandler(object):
 
 
     def sendThatShit(self, msg):
-
         try:
             self.modem.write(b'AT+CMGS="+4790909909"\r\n')
             time.sleep(5)
