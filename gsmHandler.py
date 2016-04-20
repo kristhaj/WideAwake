@@ -2,12 +2,11 @@
 @author: Sigve Skaugvoll and Martin Bjerke
 
 Thought of mind is that when initializing a instance of GSMHandler, the modem port will be found and used to connect
-modem. After this, the modem will be unlocked, the modem will check if there is any network coverage.
+modem.
 
-This cleans up the sending sms code alot. It encurrages to using the GSMHandler as a object with states, that need to be set, before use
-instead of setting and checking for valid state everytime the GSMHandler object is to be used.
+This cleans up the sending sms code alot. It encourages to using the GSMHandler as a object with states, that need to be set, before use
+instead of setting and checking for valid state every time the GSMHandler object is to be used.
 
-pip install python-gsmmodem
 pip install pyserial
 '''
 
